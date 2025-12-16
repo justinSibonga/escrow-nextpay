@@ -3,7 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Escrow API Flow Documentation</title>
+    <title>Escrow API Documentation | NextPay Integration</title>
+    <meta name="description" content="Complete API documentation for building an Upwork-like freelance marketplace with secure escrow payments using NextPay Partners API." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -19,6 +20,8 @@
         --border-color: #e5e5e5;
         --border-strong: #000000;
         --code-bg: #f4f4f4;
+        --sidebar-width: 280px;
+        --header-height: 60px;
       }
 
       * {
@@ -32,23 +35,146 @@
         line-height: 1.6;
         color: var(--text-main);
         background: var(--bg-color);
-        padding: 40px 20px;
         -webkit-font-smoothing: antialiased;
+      }
+
+      /* Layout */
+      .layout {
+        display: flex;
+        min-height: 100vh;
+      }
+
+      /* Sidebar */
+      .sidebar {
+        width: var(--sidebar-width);
+        background: #fafafa;
+        border-right: 1px solid var(--border-color);
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        overflow-y: auto;
+        z-index: 100;
+      }
+
+      .sidebar-header {
+        padding: 20px;
+        border-bottom: 1px solid var(--border-color);
+        background: #fff;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+      }
+
+      .sidebar-header .search-input {
+        margin-top: 16px;
+      }
+
+      .sidebar-logo {
+        font-weight: 700;
+        font-size: 1.1rem;
+        letter-spacing: -0.02em;
+        margin-bottom: 4px;
+      }
+
+      .sidebar-badge {
+        display: inline-block;
+        background: #000;
+        color: #fff;
+        padding: 2px 8px;
+        font-size: 0.65rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      /* Search */
+      .search-container {
+        position: relative;
+      }
+
+      .search-input {
+        width: 100%;
+        padding: 10px 12px 10px 36px;
+        border: 1px solid var(--border-color);
+        border-radius: 6px;
+        font-size: 0.9rem;
+        font-family: inherit;
+        background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E") 10px center no-repeat;
+        transition: border-color 0.2s, box-shadow 0.2s;
+      }
+
+      .search-input:focus {
+        outline: none;
+        border-color: #000;
+        box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+      }
+
+      .search-input::placeholder {
+        color: #999;
+      }
+
+      /* Navigation */
+      .nav-section {
+        padding: 16px 0;
+      }
+
+      .nav-section-title {
+        padding: 8px 20px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--text-muted);
+      }
+
+      .nav-link {
+        display: block;
+        padding: 8px 20px;
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        text-decoration: none;
+        transition: all 0.15s;
+        border-left: 3px solid transparent;
+      }
+
+      .nav-link:hover {
+        color: var(--text-main);
+        background: #f0f0f0;
+      }
+
+      .nav-link.active {
+        color: var(--text-main);
+        background: #fff;
+        border-left-color: #000;
+        font-weight: 500;
+      }
+
+      .nav-link-sub {
+        padding-left: 32px;
+        font-size: 0.85rem;
+      }
+
+      /* Main Content */
+      .main {
+        flex: 1;
+        margin-left: var(--sidebar-width);
+        padding: 40px 60px;
+        display: flex;
+        justify-content: center;
       }
 
       .container {
         max-width: 800px;
-        margin: 0 auto;
+        width: 100%;
       }
 
       /* Typography */
       h1 {
         font-weight: 700;
-        font-size: 2.5rem;
+        font-size: 2.25rem;
         letter-spacing: -0.03em;
         margin-bottom: 1rem;
-        border-bottom: 4px solid var(--border-strong);
-        padding-bottom: 20px;
       }
 
       h2 {
@@ -57,6 +183,7 @@
         letter-spacing: -0.02em;
         margin-top: 3rem;
         margin-bottom: 1.5rem;
+        padding-top: 1rem;
         display: flex;
         align-items: center;
       }
@@ -80,6 +207,13 @@
         margin-bottom: 0.75rem;
       }
 
+      h4 {
+        font-weight: 600;
+        font-size: 1.1rem;
+        margin-top: 2rem;
+        margin-bottom: 0.75rem;
+      }
+
       p {
         margin-bottom: 1rem;
         color: #333;
@@ -88,8 +222,37 @@
       .intro {
         font-size: 1.1rem;
         color: var(--text-muted);
-        margin-bottom: 3rem;
+        margin-bottom: 1rem;
         font-weight: 300;
+      }
+
+      /* API Info Card */
+      .api-info {
+        background: #f8f9fa;
+        border: 1px solid var(--border-color);
+        padding: 24px;
+        margin: 20px 0 30px;
+      }
+
+      .api-info-row {
+        display: flex;
+        margin-bottom: 12px;
+      }
+
+      .api-info-row:last-child {
+        margin-bottom: 0;
+      }
+
+      .api-info-label {
+        font-weight: 600;
+        min-width: 140px;
+        color: var(--text-muted);
+        font-size: 0.9rem;
+      }
+
+      .api-info-value {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.9rem;
       }
 
       /* Technical Elements */
@@ -103,6 +266,21 @@
         display: inline-block;
       }
 
+      .method {
+        display: inline-block;
+        padding: 2px 8px;
+        border-radius: 3px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        margin-right: 8px;
+      }
+
+      .method-get { background: #dbeafe; color: #1d4ed8; }
+      .method-post { background: #dcfce7; color: #15803d; }
+      .method-patch { background: #fef3c7; color: #b45309; }
+      .method-delete { background: #fee2e2; color: #b91c1c; }
+
       .code-block {
         font-family: "JetBrains Mono", monospace;
         background: var(--code-bg);
@@ -113,6 +291,14 @@
         overflow-x: auto;
         white-space: pre;
         color: #333;
+      }
+
+      .code-inline {
+        font-family: "JetBrains Mono", monospace;
+        background: var(--code-bg);
+        padding: 2px 6px;
+        border-radius: 3px;
+        font-size: 0.85rem;
       }
 
       ul {
@@ -133,7 +319,7 @@
         color: var(--text-muted);
       }
 
-      /* Status Badges - Monochrome */
+      /* Status Badges */
       .status-badge {
         font-family: "JetBrains Mono", monospace;
         font-size: 0.75rem;
@@ -144,32 +330,16 @@
         border: 1px solid #000;
       }
 
-      .status-created {
-        background: #fff;
-        color: #000;
-        border-style: dotted;
-      }
-      .status-funded {
-        background: #000;
-        color: #fff;
-      }
-      .status-holding {
-        background: #fff;
-        color: #000;
-        border-style: solid;
-      }
-      .status-released {
-        background: #dedede;
-        color: #000;
-        border-color: transparent;
-      }
-      .status-refunded {
-        text-decoration: line-through;
-        border-color: transparent;
-        background: #f4f4f4;
-      }
+      .status-created { background: #fff; color: #000; border-style: dotted; }
+      .status-funded { background: #000; color: #fff; }
+      .status-holding { background: #fff; color: #000; border-style: solid; }
+      .status-released { background: #dedede; color: #000; border-color: transparent; }
+      .status-refunded { text-decoration: line-through; border-color: transparent; background: #f4f4f4; }
+      .status-pending { background: #fef3c7; color: #b45309; border-color: #f59e0b; }
+      .status-succeeded { background: #dcfce7; color: #15803d; border-color: #10b981; }
+      .status-failed { background: #fee2e2; color: #b91c1c; border-color: #ef4444; }
 
-      /* Flow Diagram - Structural/Line Art style */
+      /* Flow Diagram */
       .flow-visual {
         margin: 40px 0;
         display: flex;
@@ -191,16 +361,16 @@
         font-family: "JetBrains Mono", monospace;
         font-size: 0.85rem;
         font-weight: 500;
-        min-width: 200px;
+        min-width: 280px;
         text-align: center;
         position: relative;
         z-index: 2;
-        box-shadow: 4px 4px 0px rgba(0, 0, 0, 1); /* Brutalist shadow */
+        box-shadow: 4px 4px 0px rgba(0, 0, 0, 1);
       }
 
       .flow-box.webhook {
         border-style: dashed;
-        background: #fff;
+        background: #fef3c7;
       }
 
       .flow-box.holding {
@@ -209,56 +379,17 @@
         box-shadow: 4px 4px 0px rgba(150, 150, 150, 1);
       }
 
+      .flow-box.api {
+        background: #dbeafe;
+        border-color: #3b82f6;
+      }
+
       .flow-arrow {
         font-size: 20px;
         line-height: 1;
         color: #000;
         margin: 10px 0;
-        font-family: sans-serif; /* Cleaner arrow */
-      }
-
-      .flow-branches {
-        display: flex;
-        gap: 40px;
-        width: 100%;
-        justify-content: center;
-        margin-top: 10px;
-      }
-
-      .flow-branch {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        flex: 1;
-        position: relative;
-      }
-
-      /* Connecting lines for branches */
-      .flow-branch::before {
-        content: "";
-        position: absolute;
-        top: -20px; /* Connect to arrow above */
-        width: 50%;
-        height: 20px;
-        border-top: 1px solid #000;
-      }
-      .flow-branch:first-child::before {
-        right: 0;
-        border-right: 1px solid #000;
-      }
-      .flow-branch:last-child::before {
-        left: 0;
-        border-left: 1px solid #000;
-      }
-
-      .branch-label {
-        font-size: 0.75rem;
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-        margin-bottom: 10px;
-        background: #fff;
-        padding: 0 10px;
-        z-index: 2;
+        font-family: sans-serif;
       }
 
       /* Tables */
@@ -270,8 +401,7 @@
         border: 1px solid #000;
       }
 
-      th,
-      td {
+      th, td {
         padding: 15px;
         text-align: left;
         border-bottom: 1px solid #e5e5e5;
@@ -290,213 +420,1188 @@
         border-bottom: none;
       }
 
+      /* Section Cards */
+      .section-card {
+        border: 1px solid var(--border-color);
+        padding: 24px;
+        margin: 20px 0;
+        background: #fafafa;
+      }
+
+      .section-card-title {
+        font-weight: 600;
+        font-size: 1rem;
+        margin-bottom: 12px;
+      }
+
+      /* Webhook Event List */
+      .webhook-list {
+        display: grid;
+        gap: 12px;
+        margin: 15px 0;
+      }
+
+      .webhook-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 12px;
+        background: #f8f9fa;
+        border: 1px solid var(--border-color);
+      }
+
+      .webhook-event {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.85rem;
+        background: #000;
+        color: #fff;
+        padding: 4px 8px;
+        border-radius: 3px;
+        white-space: nowrap;
+      }
+
+      .webhook-desc {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+      }
+
+      /* Entity Cards */
+      .entity-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 16px;
+        margin: 20px 0;
+      }
+
+      .entity-card {
+        border: 2px solid #000;
+        padding: 20px;
+        background: #fff;
+      }
+
+      .entity-title {
+        font-weight: 600;
+        font-size: 1rem;
+        margin-bottom: 8px;
+      }
+
+      .entity-desc {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+      }
+
+      /* Search Results */
+      .search-results {
+        position: absolute;
+        top: 100%;
+        left: 20px;
+        right: 20px;
+        background: #fff;
+        border: 1px solid var(--border-color);
+        border-radius: 6px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        max-height: 300px;
+        overflow-y: auto;
+        display: none;
+        z-index: 1000;
+      }
+
+      .search-results.active {
+        display: block;
+      }
+
+      .search-result-item {
+        padding: 12px 16px;
+        border-bottom: 1px solid var(--border-color);
+        cursor: pointer;
+        transition: background 0.15s;
+      }
+
+      .search-result-item:last-child {
+        border-bottom: none;
+      }
+
+      .search-result-item:hover {
+        background: #f5f5f5;
+      }
+
+      .search-result-title {
+        font-weight: 500;
+        font-size: 0.9rem;
+        margin-bottom: 2px;
+      }
+
+      .search-result-section {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .search-no-results {
+        padding: 16px;
+        text-align: center;
+        color: var(--text-muted);
+        font-size: 0.9rem;
+      }
+
+      /* Mobile Sidebar Toggle */
+      .sidebar-toggle {
+        display: none;
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+        background: #000;
+        color: #fff;
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        z-index: 200;
+        font-size: 1.5rem;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      }
+
       /* Responsive */
-      @media (max-width: 600px) {
-        h1 {
-          font-size: 2rem;
+      @media (max-width: 900px) {
+        .sidebar {
+          transform: translateX(-100%);
+          transition: transform 0.3s;
         }
-        .flow-branches {
-          flex-direction: column;
-          gap: 0;
+
+        .sidebar.open {
+          transform: translateX(0);
         }
-        .flow-branch {
-          margin-top: 20px;
+
+        .main {
+          margin-left: 0;
+          padding: 30px 20px;
+          max-width: 100%;
         }
-        .flow-branch::before {
-          display: none;
+
+        .sidebar-toggle {
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
+
+        h1 { font-size: 1.75rem; }
+        .api-info-row { flex-direction: column; gap: 4px; }
+      }
+
+      /* Highlight for search */
+      .highlight {
+        background: #fef3c7;
+        padding: 2px 0;
+      }
+
+      /* Scroll margin for anchors */
+      section[id] {
+        scroll-margin-top: 20px;
       }
     </style>
   </head>
   <body>
-    <div class="container">
-      <h1>Escrow API Flow</h1>
-      <p class="intro">
-        Step-by-step interaction guide for handling escrow transactions from
-        creation to release or refund.
-      </p>
-
-      <div class="section">
-        <h2>1. Create Escrow</h2>
-        <p>
-          Creates a new escrow record and prepares the system to accept funds.
-        </p>
-
-        <h3>Endpoint</h3>
-        <div class="endpoint">POST /escrows</div>
-
-        <h3>Request Body</h3>
-        <div class="code-block">
-          { "amount_cents": 150000, "currency": "PHP", "payer_id": "user_001",
-          "payee_id": "user_002", "metadata": { "order_id": "ORD-1001",
-          "service": "Website Development" } }
+    <div class="layout">
+      <!-- Sidebar Navigation -->
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+          <span class="sidebar-badge">NextPay v1</span>
+          <div class="search-container">
+            <input 
+              type="text" 
+              class="search-input" 
+              id="searchInput" 
+              placeholder="Search documentation..."
+              autocomplete="off"
+            />
+            <div class="search-results" id="searchResults"></div>
+          </div>
         </div>
 
-        <h3>Response</h3>
-        <div class="code-block">
-          { "escrow_id": "esc_123456789", "status": "created" }
-        </div>
-      </div>
+        <nav class="nav-section">
+          <div class="nav-section-title">Getting Started</div>
+          <a href="#overview" class="nav-link active">Platform Overview</a>
+          <a href="#entities" class="nav-link">Core Entities</a>
+          <a href="#authentication" class="nav-link">Authentication</a>
+        </nav>
 
-      <div class="section">
-        <h2>2. Create Payment Intent</h2>
-        <p>
-          Creates a payment intent that collects funds from the payer and routes
-          them into the escrow account.
-        </p>
+        <nav class="nav-section">
+          <div class="nav-section-title">Setup</div>
+          <a href="#setup" class="nav-link">Initial Setup</a>
+          <a href="#create-merchant" class="nav-link nav-link-sub">Create Merchant</a>
+          <a href="#create-account" class="nav-link nav-link-sub">Create Account</a>
+        </nav>
 
-        <h3>Endpoint</h3>
-        <div class="endpoint">POST /payment-intents</div>
+        <nav class="nav-section">
+          <div class="nav-section-title">Escrow Flow</div>
+          <a href="#flow" class="nav-link">Complete Flow</a>
+          <a href="#payoneer-flow" class="nav-link nav-link-sub">International Payment</a>
+          <a href="#payment-intent" class="nav-link nav-link-sub">Payment Intent (Local)</a>
+          <a href="#payment-webhook" class="nav-link nav-link-sub">Payment Webhook</a>
+          <a href="#release-funds" class="nav-link nav-link-sub">Release Funds</a>
+          <a href="#payout-webhook" class="nav-link nav-link-sub">Payout Webhook</a>
+        </nav>
 
-        <h3>Request Body</h3>
-        <div class="code-block">
-          { "account_id": "escrow_account_id", "amount_cents": 150000,
-          "currency": "PHP", "reference_number": "ESCROW-ORD-1001", "metadata":
-          { "escrow_id": "esc_123456789" } }
-        </div>
+        <nav class="nav-section">
+          <div class="nav-section-title">Reference</div>
+          <a href="#refund" class="nav-link">Refund Flow</a>
+          <a href="#webhooks" class="nav-link">Webhooks</a>
+          <a href="#errors" class="nav-link">Error Handling</a>
+          <a href="#endpoints" class="nav-link">API Endpoints</a>
+          <a href="#best-practices" class="nav-link">Best Practices</a>
+        </nav>
+      </aside>
 
-        <h3>Result</h3>
-        <ul>
-          <li>Customer completes payment</li>
-          <li>Funds are credited to the escrow account</li>
-          <li>
-            Escrow Status:
-            <span class="status-badge status-funded">funded</span>
-          </li>
-        </ul>
-      </div>
+      <!-- Main Content -->
+      <main class="main">
+        <div class="container">
+          <!-- Header -->
+          <header style="margin-bottom: 40px; border-bottom: 4px solid var(--border-strong); padding-bottom: 30px;">
+            <h1>Escrow API Documentation</h1>
+            <p class="intro">
+              Complete API flow for building an Upwork-like freelance marketplace with secure escrow payments using NextPay Partners API.
+            </p>
 
-      <div class="section">
-        <h2>3. Payment Confirmation</h2>
-        <p>
-          The system listens for payment confirmation before locking the funds.
-        </p>
-
-        <h3>Webhook Event</h3>
-        <div class="endpoint">payment_intent.succeeded</div>
-
-        <h3>Action</h3>
-        <ul>
-          <li>Verify escrow_id from metadata</li>
-          <li>Lock funds in escrow</li>
-          <li>Prevent withdrawal by payee</li>
-          <li>
-            Escrow Status:
-            <span class="status-badge status-holding">holding</span>
-          </li>
-        </ul>
-      </div>
-
-      <div class="section">
-        <h2>4. Release Escrow</h2>
-        <p>Once conditions are met, release the escrow funds to the payee.</p>
-
-        <h3>Endpoint</h3>
-        <div class="endpoint">POST /escrows/{escrow_id}/release</div>
-
-        <h3>Action</h3>
-        <ul>
-          <li>Create a payout request</li>
-          <li>Transfer funds from escrow to payee account</li>
-          <li>
-            Escrow Status:
-            <span class="status-badge status-released">released</span>
-          </li>
-        </ul>
-      </div>
-
-      <div class="section">
-        <h2>5. Payout Processing</h2>
-        <p>Track payout progress via webhooks.</p>
-
-        <h3>Possible Events</h3>
-        <div class="code-block">
-          payout.processed payout.succeeded payout.failed
-        </div>
-
-        <h3>Final State</h3>
-        <ul>
-          <li>On success → funds received by payee</li>
-          <li>On failure → escrow enters manual review</li>
-        </ul>
-      </div>
-
-      <div class="section">
-        <h2>6. Refund Escrow (Optional)</h2>
-        <p>
-          Refunds the payer if the transaction is canceled or conditions fail.
-        </p>
-
-        <h3>Endpoint</h3>
-        <div class="endpoint">POST /escrows/{escrow_id}/refund</div>
-
-        <h3>Action</h3>
-        <ul>
-          <li>Funds are returned to the payer</li>
-          <li>Escrow is closed</li>
-          <li>
-            Escrow Status:
-            <span class="status-badge status-refunded">refunded</span>
-          </li>
-        </ul>
-      </div>
-
-      <div class="section">
-        <h2>Transaction Flow</h2>
-        <div class="flow-visual">
-          <div class="flow-step">
-            <div class="flow-box">
-              Employer will send a contract to the talent
+            <div class="api-info" id="authentication">
+              <div class="api-info-row">
+                <span class="api-info-label">Base URL</span>
+                <span class="api-info-value">https://api.partners.nextpay.world</span>
+              </div>
+              <div class="api-info-row">
+                <span class="api-info-label">API Version</span>
+                <span class="api-info-value">v1</span>
+              </div>
+              <div class="api-info-row">
+                <span class="api-info-label">Authentication</span>
+                <span class="api-info-value">Basic Auth (Client ID:Client Secret → Base64)</span>
+              </div>
+              <div class="api-info-row">
+                <span class="api-info-label">Currency</span>
+                <span class="api-info-value">PHP (amounts in cents)</span>
+              </div>
             </div>
-            <div class="flow-arrow">↓</div>
-          </div>
-          <div class="flow-step">
-            <div class="flow-box">Talent will accept</div>
-            <div class="flow-arrow">↓</div>
-          </div>
-          <div class="flow-step">
-            <div class="flow-box">Collect Payment</div>
-            <div class="flow-arrow">↓</div>
-          </div>
-          <div class="flow-step">
-            <div class="flow-box holding">Talent will do the trial</div>
-            <div class="flow-arrow">↓</div>
-          </div>
-          <div class="flow-step">
-            <div class="flow-box">Release the payment to talent</div>
-          </div>
-        </div>
-      </div>
+          </header>
 
-      <div class="section">
-        <h2>Error Handling</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>Scenario</th>
-              <th>Result</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Payment failed</td>
-              <td>Escrow remains created</td>
-            </tr>
-            <tr>
-              <td>Payment expired</td>
-              <td>Escrow canceled</td>
-            </tr>
-            <tr>
-              <td>Payout failed</td>
-              <td>Escrow flagged for review</td>
-            </tr>
-            <tr>
-              <td>Duplicate release</td>
-              <td>Idempotent response</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+          <!-- Platform Overview -->
+          <section id="overview">
+            <h2>Platform Overview</h2>
+            <p>
+              This documentation outlines how to build an escrow-based freelance marketplace (similar to Upwork) using the NextPay Partners API. The platform connects <strong>Clients</strong> (employers) with <strong>Talents</strong> through secure payment protection.
+            </p>
+
+            <div class="section-card">
+              <div class="section-card-title">How Escrow Works</div>
+              <ul>
+                <li>Client deposits payment into an escrow account before work begins</li>
+                <li>Funds are held securely until the job is completed</li>
+                <li>Upon approval, funds are released to the talent</li>
+                <li>If disputes arise, funds can be refunded to the client</li>
+              </ul>
+            </div>
+
+            <div class="section-card">
+              <div class="section-card-title">Trial Period System</div>
+              <p>Our platform offers flexible trial periods to help clients evaluate talents before committing to long-term engagements:</p>
+              <ul>
+                <li><strong>30-Day Trial:</strong> Short-term evaluation for quick projects or initial assessment</li>
+                <li><strong>60-Day Trial:</strong> Standard trial period for medium-complexity projects</li>
+                <li><strong>90-Day Trial:</strong> Extended evaluation for complex, long-term engagements</li>
+              </ul>
+              <p style="margin-bottom: 0">During the trial period, clients can assess the talent's performance, communication, and deliverables. At the end of the trial, clients can choose to continue working with the talent on a permanent basis or end the engagement.</p>
+            </div>
+
+            <div class="section-card">
+              <div class="section-card-title">Payment Gateway Integration</div>
+              <p>Our platform is designed for <strong>foreign clients</strong> hiring <strong>Filipino talents</strong>. Here's the recommended payment stack:</p>
+              
+              <div style="background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%); border: 2px solid #10b981; border-radius: 12px; padding: 16px; margin: 16px 0;">
+                <h4 style="margin: 0 0 12px 0; color: #059669;"><svg style="width: 16px; height: 16px; vertical-align: middle; margin-right: 4px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Recommended Combo: Payoneer + NextPay</h4>
+                <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+                  <div style="background: white; padding: 12px 16px; border-radius: 8px; text-align: center;">
+                    <svg style="width: 24px; height: 24px; color: #f472b6;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
+                    <div><strong>Payoneer</strong></div>
+                    <div style="font-size: 12px; color: #666;">Receive USD/EUR</div>
+                  </div>
+                  <svg style="width: 24px; height: 24px; color: #666;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                  <div style="background: white; padding: 12px 16px; border-radius: 8px; text-align: center;">
+                    <svg style="width: 24px; height: 24px; color: #10b981;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                    <div><strong>Convert</strong></div>
+                    <div style="font-size: 12px; color: #666;">USD/EUR to PHP</div>
+                  </div>
+                  <svg style="width: 24px; height: 24px; color: #666;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                  <div style="background: white; padding: 12px 16px; border-radius: 8px; text-align: center;">
+                    <svg style="width: 24px; height: 24px; color: #3b82f6;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                    <div><strong>NextPay</strong></div>
+                    <div style="font-size: 12px; color: #666;">Escrow + Payout</div>
+                  </div>
+                </div>
+              </div>
+
+              <h4 style="margin-top: 20px; margin-bottom: 8px;"><svg style="width: 16px; height: 16px; vertical-align: middle; margin-right: 4px; color: #f472b6;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg> Step 1: Receive International Payments</h4>
+              <table style="margin-bottom: 16px;">
+                <thead>
+                  <tr>
+                    <th>Provider</th>
+                    <th>Features</th>
+                    <th>Why Use It</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Payoneer</strong></td>
+                    <td>USD/EUR accounts, multi-currency, auto-convert to PHP</td>
+                    <td>Trusted by 2,000+ marketplaces (Upwork, Fiverr)</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <h4 style="margin-bottom: 8px;"><svg style="width: 16px; height: 16px; vertical-align: middle; margin-right: 4px; color: #3b82f6;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg> Step 2: Escrow &amp; Payout (Philippines)</h4>
+              <table style="margin-bottom: 16px;">
+                <thead>
+                  <tr>
+                    <th>Provider</th>
+                    <th>Features</th>
+                    <th>Why Use It</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>NextPay</strong></td>
+                    <td>Escrow holding, InstaPay, PESONet, PHP payouts</td>
+                    <td>BSP-regulated, instant local transfers</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div style="background: #dbeafe; border: 1px solid #3b82f6; border-radius: 8px; padding: 12px; margin-top: 8px;">
+                <strong><svg style="width: 14px; height: 14px; vertical-align: middle; margin-right: 4px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> How it works:</strong> Foreign client pays via Payoneer (USD/EUR) → Payoneer converts & transfers PHP to your NextPay account → NextPay holds funds in escrow → Upon approval, NextPay pays Filipino talent via InstaPay/PESONet.
+              </div>
+            </div>
+          </section>
+
+          <!-- Core Entities -->
+          <section id="entities">
+            <h2>Core Entities</h2>
+            <p>Understanding the key entities in the NextPay API:</p>
+
+            <div class="entity-grid">
+              <div class="entity-card">
+                <div class="entity-title">Partner</div>
+                <div class="entity-desc">Your platform. Integrates with NextPay and manages merchants/accounts.</div>
+              </div>
+              <div class="entity-card">
+                <div class="entity-title">Merchant</div>
+                <div class="entity-desc">A verified user (Client or Talent) who can receive settlements.</div>
+              </div>
+              <div class="entity-card">
+                <div class="entity-title">Account</div>
+                <div class="entity-desc">A financial wallet that holds funds. Can be partner-owned or merchant-owned.</div>
+              </div>
+              <div class="entity-card">
+                <div class="entity-title">Payment Intent</div>
+                <div class="entity-desc">A request to collect funds from a customer (money-in via QR code).</div>
+              </div>
+              <div class="entity-card">
+                <div class="entity-title">Payout Request</div>
+                <div class="entity-desc">A request to disburse funds to a bank account (money-out).</div>
+              </div>
+              <div class="entity-card">
+                <div class="entity-title">Transaction</div>
+                <div class="entity-desc">A ledger record tracking all fund movements between accounts.</div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Initial Setup -->
+          <section id="setup">
+            <h2>Initial Setup</h2>
+
+            <div id="create-merchant">
+              <h4>Step 1: Create a Merchant for the Talent</h4>
+              <p>When a talent registers on your platform, create a merchant to enable payouts:</p>
+
+              <h3>Endpoint</h3>
+              <div class="endpoint"><span class="method method-post">POST</span>/v1/merchants</div>
+
+              <h3>Request Body</h3>
+              <div class="code-block">{
+  "display_name": "John Doe Talent",
+  "legal_name": "John Doe",
+  "external_id": "talent_001",
+  "legal_address": {
+    "line1": "123 Main Street",
+    "city": "Manila",
+    "country": "PH"
+  },
+  "settlement_account": {
+    "bank_account_name": "John Doe",
+    "bank_account_number": "1234567890",
+    "bank_code": "BOPIPHMMXXX",
+    "preferred_settlement_rail": "instapay"
+  }
+}</div>
+
+              <h3>Response</h3>
+              <div class="code-block">{
+  "id": "merchant_abc123",
+  "display_name": "John Doe Talent",
+  "external_id": "talent_001",
+  "legal_entity_id": "le_xyz789",
+  "bank_account_name": "John Doe",
+  "bank_account_number": "1234567890",
+  "bank_code_instapay": "BOPIPHMMXXX"
+}</div>
+            </div>
+
+            <div id="create-account">
+              <h4>Step 2: Create Escrow Account for Each Contract</h4>
+              <p>For each job contract, create a dedicated escrow account to hold funds:</p>
+
+              <h3>Endpoint</h3>
+              <div class="endpoint"><span class="method method-post">POST</span>/v1/accounts</div>
+
+              <h3>Request Body</h3>
+              <div class="code-block">{
+  "display_name": "Escrow - Website Development",
+  "external_id": "contract_ORD-1001"
+}</div>
+
+              <h3>Response</h3>
+              <div class="code-block">{
+  "id": "acc_escrow_123",
+  "display_name": "Escrow - Website Development",
+  "external_id": "contract_ORD-1001",
+  "merchant_id": null
+}</div>
+            </div>
+          </section>
+
+          <!-- Escrow Flow -->
+          <section id="flow">
+            <h2>Complete Escrow Flow</h2>
+
+            <div class="flow-visual">
+              <div class="flow-step">
+                <div class="flow-box">1. Client creates a job post<br><small style="font-weight: normal; opacity: 0.8;">(objectives, budget, duration: 30/60/90 days)</small></div>
+                <div class="flow-arrow">↓</div>
+              </div>
+              <div class="flow-step">
+                <div class="flow-box">2. Track applications & choose candidate</div>
+                <div class="flow-arrow">↓</div>
+              </div>
+              <div class="flow-step">
+                <div class="flow-box">3. Client sends offer to selected talent</div>
+                <div class="flow-arrow">↓</div>
+              </div>
+              <div class="flow-step">
+                <div class="flow-box">4. Offer negotiation<br><small style="font-weight: normal; opacity: 0.8;">↺ Talent reviews & negotiates ↔ Client revises offer</small></div>
+                <div class="flow-arrow">↓</div>
+              </div>
+              <div class="flow-step">
+                <div class="flow-box">5. Talent accepts offer</div>
+                <div class="flow-arrow">↓</div>
+              </div>
+              <div class="flow-step">
+                <div class="flow-box">6. Collect payment from foreign client</div>
+                <div class="flow-arrow">↓</div>
+              </div>
+              <div class="flow-step">
+                <div class="flow-box api" style="background: linear-gradient(135deg, #fce7f3 0%, #fbcfe8 100%); border-color: #f472b6;"><svg style="width: 16px; height: 16px; vertical-align: middle; margin-right: 4px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg> Payoneer<br><small style="font-weight: normal; opacity: 0.8;">Client pays in USD/EUR • Converted to PHP</small></div>
+                <div class="flow-arrow">↓</div>
+              </div>
+              <div class="flow-step">
+                <div class="flow-box webhook">7. Transfer to escrow account</div>
+                <div class="flow-arrow">↓</div>
+              </div>
+              <div class="flow-step">
+                <div class="flow-box holding"><svg style="width: 16px; height: 16px; vertical-align: middle; margin-right: 4px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg> NextPay Escrow<br><small style="font-weight: normal; opacity: 0.8;">8. Funds held in PHP</small></div>
+                <div class="flow-arrow">↓</div>
+              </div>
+              <div class="flow-step">
+                <div class="flow-box">9. Trial period ends<br><small style="font-weight: normal; opacity: 0.8;">Talent delivers work • Client reviews performance</small></div>
+                <div class="flow-arrow">↓</div>
+              </div>
+              <div class="flow-step">
+                <div class="flow-box">10. Client decision<br><small style="font-weight: normal; opacity: 0.8;">Approve deliverable or raise dispute</small></div>
+                <div class="flow-arrow">↓</div>
+              </div>
+              
+              <!-- Branching paths -->
+              <div style="display: flex; gap: 40px; justify-content: center; margin: 10px 0;">
+                <!-- Complete path -->
+                <div style="text-align: center;">
+                  <div class="flow-box" style="background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%); border-color: #86efac;"><svg style="width: 14px; height: 14px; vertical-align: middle; margin-right: 2px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Complete</div>
+                  <div class="flow-arrow">↓</div>
+                  <div class="flow-box">Approve & release<br><small style="font-weight: normal; opacity: 0.8;">to talent</small></div>
+                </div>
+                <!-- Dispute path -->
+                <div style="text-align: center;">
+                  <div class="flow-box" style="background: linear-gradient(135deg, #fef9c3 0%, #fde047 100%); border-color: #facc15;"><svg style="width: 14px; height: 14px; vertical-align: middle; margin-right: 2px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg> Dispute</div>
+                  <div class="flow-arrow">↓</div>
+                  <div class="flow-box">Resolution process<br><small style="font-weight: normal; opacity: 0.8;">Refund or partial release</small></div>
+                </div>
+              </div>
+              
+              <div class="flow-arrow">↓</div>
+              <div class="flow-step">
+                <div class="flow-box holding"><svg style="width: 16px; height: 16px; vertical-align: middle; margin-right: 4px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg> NextPay API<br><small style="font-weight: normal; opacity: 0.8;">11. Pay Filipino talent in PHP</small></div>
+                <div class="flow-arrow">↓</div>
+              </div>
+              <div class="flow-step">
+                <div class="flow-box webhook">12. payout.succeeded (Webhook)<br><small style="font-weight: normal; opacity: 0.8;">InstaPay/PESONet transfer complete</small></div>
+                <div class="flow-arrow">↓</div>
+              </div>
+              <div class="flow-step">
+                <div class="flow-box">13. Contract complete</div>
+              </div>
+            </div>
+
+            <!-- Step 3: International Payment (Payoneer) -->
+            <div id="payoneer-flow">
+              <h4>Step 3: Collect International Payment (Payoneer Checkout)</h4>
+              <p>For foreign clients (USD/EUR), use the <strong>Payoneer Checkout API</strong> to generate a hosted payment page. This allows clients to pay safely via Card or Bank Transfer.</p>
+
+              <div class="api-info" style="margin: 0 0 20px; padding: 16px;">
+                <div class="api-info-row">
+                  <span class="api-info-label">Provider API</span>
+                  <span class="api-info-value">https://api.live.oscato.com/api/lists</span>
+                </div>
+                <div class="api-info-row">
+                  <span class="api-info-label">Auth</span>
+                  <span class="api-info-value">Basic Auth (Merchant Code : API Token)</span>
+                </div>
+              </div>
+
+              <h3>1. Create Payment Session</h3>
+              <div class="endpoint"><span class="method method-post">POST</span>/api/lists</div>
+
+              <h3>Request Body</h3>
+              <div class="code-block">{
+  "transactionId": "ORD-1001-PAYMENT",
+  "integration": "HOSTED",
+  "country": "US",
+  "payment": {
+    "amount": 3000.00,
+    "currency": "USD",
+    "reference": "Contract #1001"
+  },
+  "style": {
+    "language": "en"
+  },
+  "callback": {
+    "returnUrl": "https://your-platform.com/checkout/success",
+    "cancelUrl": "https://your-platform.com/checkout/cancel",
+    "notificationUrl": "https://your-platform.com/webhooks/payoneer"
+  }
+}</div>
+
+              <h3>Response</h3>
+              <div class="code-block">{
+  "links": {
+    "self": "https://api.live.oscato.com/api/lists/LIST-123abc456",
+    "redirect": "https://checkout.payoneer.com/payment/LIST-123abc456"
+  },
+  "resultInfo": "Payment session created successfully"
+}</div>
+
+              <div class="section-card">
+                <div class="section-card-title">2. Redirect Client</div>
+                <p>Redirect the client's browser to the <code>links.redirect</code> URL from the response. They will complete the payment on Payoneer's secure hosted page.</p>
+              </div>
+
+              <div class="section-card">
+                <div class="section-card-title">3. Handle Notification (Webhook)</div>
+                <p>Payoneer sends an asynchronous notification to your <code>notificationUrl</code> when the status changes.</p>
+                
+                <h3>Payload (CHARGED)</h3>
+                <div class="code-block">{
+  "interaction": {
+    "code": "PROCEED",
+    "reason": "OK"
+  },
+  "payment": {
+    "reference": "Contract #1001",
+    "amount": 3000.00,
+    "currency": "USD"
+  },
+  "transactionId": "ORD-1001-PAYMENT",
+  "resultInfo": "Transaction succeeded"
+}</div>
+                
+                <p style="margin-top: 12px; font-size: 0.9rem; color: var(--text-muted);">
+                  <strong>Next Step:</strong> Confirm the funds in your Payoneer account, then initiate a withdrawal/transfer to your <strong>NextPay Escrow Account</strong> via bank transfer (using the bank details from Step 2).
+                </p>
+              </div>
+            </div>
+
+            <!-- Step 4: Create Payment Intent -->
+            <div id="payment-intent">
+              <h4>Step 4: Create Payment Intent (Local Collection)</h4>
+              <p>If the client is local (PH) or paying via QRPH, create a payment intent directly:</p>
+
+              <h3>Endpoint</h3>
+              <div class="endpoint"><span class="method method-post">POST</span>/v1/payment-intents</div>
+
+              <h3>Request Body</h3>
+              <div class="code-block">{
+  "account_id": "acc_escrow_123",
+  "amount_cents": 150000,
+  "currency": "PHP",
+  "reference_number": "ESCROW-ORD-1001",
+  "metadata": {
+    "contract_id": "contract_ORD-1001",
+    "client_id": "user_001",
+    "talent_id": "user_002",
+    "service": "Website Development"
+  },
+  "payment_method_options": {
+    "qrph": {
+      "resolution": 720
+    }
+  }
+}</div>
+
+              <h3>Response</h3>
+              <div class="code-block">{
+  "id": "pi_abc123",
+  "account_id": "acc_escrow_123",
+  "amount_cents": 150000,
+  "currency": "PHP",
+  "status": "pending",
+  "reference_number": "ESCROW-ORD-1001",
+  "payment_method_options": {
+    "qrph": {
+      "resolution": 720,
+      "qr_code": "iVBORw0KG... (base64 encoded QR image)"
+    }
+  },
+  "expires_at": "2024-12-17T20:00:00Z"
+}</div>
+
+              <div class="section-card">
+                <div class="section-card-title">QR Code Display</div>
+                <p style="margin-bottom: 0">Decode the base64 <code class="code-inline">qr_code</code> string and display it to the client. They can scan it with any Philippine banking app to complete the payment.</p>
+              </div>
+            </div>
+
+            <!-- Step 5: Handle Payment Confirmation -->
+            <div id="payment-webhook">
+              <h4>Step 5: Handle Payment Confirmation Webhook</h4>
+              <p>Listen for the <code class="code-inline">payment_intent.succeeded</code> webhook to confirm payment and lock funds:</p>
+
+              <h3>Webhook Payload</h3>
+              <div class="code-block">{
+  "webhook_event_type": "payment_intent.succeeded",
+  "id": "pi_abc123",
+  "account_id": "acc_escrow_123",
+  "amount_cents": 150000,
+  "currency": "PHP",
+  "status": "succeeded",
+  "reference_number": "ESCROW-ORD-1001",
+  "metadata": {
+    "contract_id": "contract_ORD-1001",
+    "client_id": "user_001",
+    "freelancer_id": "user_002"
+  },
+  "receipt": {
+    "receipt_id": "rcpt_xyz",
+    "transaction_id": "txn_123",
+    "treasury_reference_no": "TREF_112233",
+    "rails_reference_no": "RREF_445566"
+  }
+}</div>
+
+              <h3>Your Backend Action</h3>
+              <ul>
+                <li>Update contract status to <span class="status-badge status-funded">funded</span></li>
+                <li>Lock funds in escrow (prevent withdrawal)</li>
+                <li>Notify talent that work can begin</li>
+                <li>Update escrow status to <span class="status-badge status-holding">holding</span></li>
+              </ul>
+            </div>
+
+            <!-- Step 9: Release Funds -->
+            <div id="release-funds">
+              <h4>Step 10: Release Funds to Talent</h4>
+              <p>When the client approves the completed work, create a payout request:</p>
+
+              <h3>Endpoint</h3>
+              <div class="endpoint"><span class="method method-post">POST</span>/v1/payout-requests</div>
+
+              <h3>Request Body</h3>
+              <div class="code-block">{
+  "source_account_id": "acc_escrow_123",
+  "amount_cents": 142500,
+  "currency": "PHP",
+  "status": "published",
+  "settlement_rail": "instapay",
+  "external_id": "payout-ORD-1001",
+  "label": "Contract Payment - Website Development",
+  "description": "Payment for completed website development work",
+  "payout_memo": "Thank you for your work!",
+  "settlement_account": {
+    "bank_account_name": "John Doe",
+    "bank_account_number": "1234567890",
+    "bank_code": "BOPIPHMMXXX"
+  },
+  "partner_payout_fee": {
+    "amount_cents": 7500,
+    "destination_account_id": "acc_platform_fees"
+  }
+}</div>
+
+              <div class="section-card">
+                <div class="section-card-title">Platform Fee Calculation</div>
+                <p style="margin-bottom: 8px">Example with 5% platform fee:</p>
+                <ul style="margin: 0">
+                  <li>Contract Amount: P1,500.00 (150000 cents)</li>
+                  <li>Platform Fee (5%): P75.00 (7500 cents)</li>
+                  <li>Talent Receives: P1,425.00 (142500 cents)</li>
+                </ul>
+              </div>
+
+              <h3>Response</h3>
+              <div class="code-block">{
+  "id": "pr_xyz789",
+  "source_account_id": "acc_escrow_123",
+  "amount_cents": 142500,
+  "currency": "PHP",
+  "status": "queued",
+  "external_id": "payout-ORD-1001",
+  "settlement_rail": "instapay",
+  "payouts": [
+    {
+      "id": "payout_001",
+      "amount_cents": 142500,
+      "status": "processing"
+    }
+  ]
+}</div>
+            </div>
+
+            <!-- Payout Webhook -->
+            <div id="payout-webhook">
+              <h4>Step 11: Handle Payout Confirmation</h4>
+              <p>Listen for payout webhooks to confirm successful transfer:</p>
+
+              <h3>Webhook Payload</h3>
+              <div class="code-block">{
+  "webhook_event_type": "payout.succeeded",
+  "id": "payout_001",
+  "payout_request_id": "pr_xyz789",
+  "amount_cents": 142500,
+  "fee_cents": 1500,
+  "currency": "PHP",
+  "status": "succeeded",
+  "bank_account_name": "John Doe",
+  "bank_account_number": "******7890",
+  "settlement_rail": "instapay",
+  "receipt": {
+    "receipt_id": "rcpt_po_abc",
+    "treasury_reference_no": "TREF_PO_7788"
+  }
+}</div>
+
+              <h3>Your Backend Action</h3>
+              <ul>
+                <li>Update contract status to <span class="status-badge status-released">released</span></li>
+                <li>Clear escrow account</li>
+                <li>Notify talent of successful payment</li>
+                <li>Close the contract</li>
+              </ul>
+            </div>
+          </section>
+
+          <!-- Refund Flow -->
+          <section id="refund">
+            <h2>Refund Flow</h2>
+            <p>If a dispute is resolved in favor of the client, refund the escrow funds:</p>
+
+            <h3>Endpoint</h3>
+            <div class="endpoint"><span class="method method-post">POST</span>/v1/payout-requests</div>
+
+            <h3>Request Body</h3>
+            <div class="code-block">{
+  "source_account_id": "acc_escrow_123",
+  "amount_cents": 150000,
+  "currency": "PHP",
+  "status": "published",
+  "settlement_rail": "instapay",
+  "external_id": "refund-ORD-1001",
+  "label": "Refund - Contract Cancelled",
+  "payout_memo": "Contract cancelled - full refund",
+  "settlement_account": {
+    "bank_account_name": "Client Name",
+    "bank_account_number": "9876543210",
+    "bank_code": "BNORPHM1XXX"
+  }
+}</div>
+
+            <p>After successful payout, update contract status to <span class="status-badge status-refunded">refunded</span>.</p>
+          </section>
+
+          <!-- Webhooks -->
+          <section id="webhooks">
+            <h2>Webhook Events</h2>
+            <p>Register a webhook endpoint to receive real-time event notifications:</p>
+
+            <h3>Endpoint</h3>
+            <div class="endpoint"><span class="method method-post">POST</span>/v1/webhooks</div>
+
+            <h3>Payment Intent Events</h3>
+            <div class="webhook-list">
+              <div class="webhook-item">
+                <span class="webhook-event">payment_intent.created</span>
+                <span class="webhook-desc">Payment intent was successfully created</span>
+              </div>
+              <div class="webhook-item">
+                <span class="webhook-event">payment_intent.succeeded</span>
+                <span class="webhook-desc">Payment completed successfully - funds credited to account</span>
+              </div>
+              <div class="webhook-item">
+                <span class="webhook-event">payment_intent.failed</span>
+                <span class="webhook-desc">Payment attempt failed (insufficient funds, declined, etc.)</span>
+              </div>
+              <div class="webhook-item">
+                <span class="webhook-event">payment_intent.expired</span>
+                <span class="webhook-desc">Payment intent expired before completion</span>
+              </div>
+              <div class="webhook-item">
+                <span class="webhook-event">payment_intent.canceled</span>
+                <span class="webhook-desc">Payment intent was explicitly canceled</span>
+              </div>
+            </div>
+
+            <h3>Payout Events</h3>
+            <div class="webhook-list">
+              <div class="webhook-item">
+                <span class="webhook-event">payout_request.queued</span>
+                <span class="webhook-desc">Payout request accepted and queued for processing</span>
+              </div>
+              <div class="webhook-item">
+                <span class="webhook-event">payout.succeeded</span>
+                <span class="webhook-desc">Payout completed - funds transferred to recipient</span>
+              </div>
+              <div class="webhook-item">
+                <span class="webhook-event">payout.failed</span>
+                <span class="webhook-desc">Payout failed - check failure_reason for details</span>
+              </div>
+            </div>
+
+            <h3>Deposit Events</h3>
+            <div class="webhook-list">
+              <div class="webhook-item">
+                <span class="webhook-event">deposit.confirmed</span>
+                <span class="webhook-desc">Direct deposit confirmed and credited to account</span>
+              </div>
+              <div class="webhook-item">
+                <span class="webhook-event">direct_transfer.received</span>
+                <span class="webhook-desc">Transfer received from another account</span>
+              </div>
+            </div>
+          </section>
+
+          <!-- Error Handling -->
+          <section id="errors">
+            <h2>Error Handling</h2>
+            <table>
+              <thead>
+                <tr>
+                  <th>Scenario</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Payment failed</td>
+                  <td><span class="status-badge status-failed">failed</span></td>
+                  <td>Show error to client, allow retry</td>
+                </tr>
+                <tr>
+                  <td>Payment expired</td>
+                  <td><span class="status-badge status-pending">expired</span></td>
+                  <td>Create new payment intent</td>
+                </tr>
+                <tr>
+                  <td>Payout failed</td>
+                  <td><span class="status-badge status-failed">failed</span></td>
+                  <td>Flag for manual review, verify bank details</td>
+                </tr>
+                <tr>
+                  <td>Insufficient balance</td>
+                  <td><span class="status-badge status-failed">failed</span></td>
+                  <td>Check account balance before payout</td>
+                </tr>
+                <tr>
+                  <td>Rate limit exceeded</td>
+                  <td>HTTP 429</td>
+                  <td>Implement exponential backoff</td>
+                </tr>
+                <tr>
+                  <td>Duplicate request</td>
+                  <td>Idempotent</td>
+                  <td>Use X-Idempotency-Key header</td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+
+          <!-- API Reference Summary -->
+          <section id="endpoints">
+            <h2>API Endpoints Summary</h2>
+            <table>
+              <thead>
+                <tr>
+                  <th>Endpoint</th>
+                  <th>Method</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code class="code-inline">/v1/merchants</code></td>
+                  <td><span class="method method-post">POST</span><span class="method method-get">GET</span></td>
+                  <td>Create and list merchants</td>
+                </tr>
+                <tr>
+                  <td><code class="code-inline">/v1/merchants/:id</code></td>
+                  <td><span class="method method-get">GET</span><span class="method method-patch">PATCH</span></td>
+                  <td>Get and update merchant</td>
+                </tr>
+                <tr>
+                  <td><code class="code-inline">/v1/accounts</code></td>
+                  <td><span class="method method-post">POST</span><span class="method method-get">GET</span></td>
+                  <td>Create and list accounts</td>
+                </tr>
+                <tr>
+                  <td><code class="code-inline">/v1/accounts/:id</code></td>
+                  <td><span class="method method-get">GET</span><span class="method method-patch">PATCH</span></td>
+                  <td>Get and update account</td>
+                </tr>
+                <tr>
+                  <td><code class="code-inline">/v1/accounts/:id/balance</code></td>
+                  <td><span class="method method-get">GET</span></td>
+                  <td>Get account balance</td>
+                </tr>
+                <tr>
+                  <td><code class="code-inline">/v1/payment-intents</code></td>
+                  <td><span class="method method-post">POST</span><span class="method method-get">GET</span></td>
+                  <td>Create and list payment intents</td>
+                </tr>
+                <tr>
+                  <td><code class="code-inline">/v1/payment-intents/:id</code></td>
+                  <td><span class="method method-get">GET</span></td>
+                  <td>Get payment intent details</td>
+                </tr>
+                <tr>
+                  <td><code class="code-inline">/v1/payment-intents/:id/cancel</code></td>
+                  <td><span class="method method-post">POST</span></td>
+                  <td>Cancel payment intent</td>
+                </tr>
+                <tr>
+                  <td><code class="code-inline">/v1/payout-requests</code></td>
+                  <td><span class="method method-post">POST</span><span class="method method-get">GET</span></td>
+                  <td>Create and list payout requests</td>
+                </tr>
+                <tr>
+                  <td><code class="code-inline">/v1/payout-requests/:id</code></td>
+                  <td><span class="method method-get">GET</span></td>
+                  <td>Get payout request details</td>
+                </tr>
+                <tr>
+                  <td><code class="code-inline">/v1/receiving_institutions</code></td>
+                  <td><span class="method method-get">GET</span></td>
+                  <td>List supported banks</td>
+                </tr>
+                <tr>
+                  <td><code class="code-inline">/v1/webhooks</code></td>
+                  <td><span class="method method-post">POST</span><span class="method method-get">GET</span></td>
+                  <td>Register and list webhooks</td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+
+          <!-- Best Practices -->
+          <section id="best-practices">
+            <h2>Best Practices</h2>
+            <div class="section-card">
+              <ul>
+                <li><strong>Idempotency:</strong> Always include <code class="code-inline">X-Idempotency-Key</code> header for POST requests to prevent duplicate transactions</li>
+                <li><strong>Webhook Verification:</strong> Verify webhook signatures to ensure authenticity</li>
+                <li><strong>Amount Validation:</strong> Always validate amounts match between your system and API responses</li>
+                <li><strong>Status Polling:</strong> Use webhooks as primary, but implement status polling as backup</li>
+                <li><strong>Error Logging:</strong> Log all API responses for debugging and audit trails</li>
+                <li><strong>Balance Checks:</strong> Check account balance before initiating payouts</li>
+                <li><strong>Bank Code Lookup:</strong> Use <code class="code-inline">/v1/receiving_institutions</code> to validate bank codes</li>
+              </ul>
+            </div>
+          </section>
+
+          <!-- Footer -->
+          <footer style="margin-top: 60px; padding-top: 30px; border-top: 1px solid var(--border-color);">
+            <p style="color: var(--text-muted); font-size: 0.9rem;">
+              For complete API reference, visit <a href="https://api.partners.nextpay.world/docs" style="color: #000;">api.partners.nextpay.world/docs</a><br>
+              Last updated: December 2024 | NextPay Partners API v1
+            </p>
+          </footer>
+        </div>
+      </main>
+
+      <!-- Mobile Sidebar Toggle -->
+      <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle navigation">
+        ☰
+      </button>
     </div>
+
+    <script>
+      // Search functionality
+      const searchInput = document.getElementById('searchInput');
+      const searchResults = document.getElementById('searchResults');
+
+      // Searchable content
+      const searchableItems = [
+        { title: 'Platform Overview', section: 'Getting Started', id: 'overview' },
+        { title: 'Core Entities', section: 'Getting Started', id: 'entities' },
+        { title: 'Authentication', section: 'Getting Started', id: 'authentication' },
+        { title: 'Partner', section: 'Core Entities', id: 'entities' },
+        { title: 'Merchant', section: 'Core Entities', id: 'entities' },
+        { title: 'Account', section: 'Core Entities', id: 'entities' },
+        { title: 'Payment Intent', section: 'Core Entities', id: 'entities' },
+        { title: 'Payout Request', section: 'Core Entities', id: 'entities' },
+        { title: 'Initial Setup', section: 'Setup', id: 'setup' },
+        { title: 'Create Merchant', section: 'Setup', id: 'create-merchant' },
+        { title: 'Create Account', section: 'Setup', id: 'create-account' },
+        { title: 'Complete Escrow Flow', section: 'Escrow Flow', id: 'flow' },
+        { title: 'Create Payment Intent', section: 'Escrow Flow', id: 'payment-intent' },
+        { title: 'Payment Webhook', section: 'Escrow Flow', id: 'payment-webhook' },
+        { title: 'Release Funds', section: 'Escrow Flow', id: 'release-funds' },
+        { title: 'Payout Webhook', section: 'Escrow Flow', id: 'payout-webhook' },
+        { title: 'Refund Flow', section: 'Reference', id: 'refund' },
+        { title: 'Webhooks', section: 'Reference', id: 'webhooks' },
+        { title: 'payment_intent.succeeded', section: 'Webhooks', id: 'webhooks' },
+        { title: 'payment_intent.failed', section: 'Webhooks', id: 'webhooks' },
+        { title: 'payout.succeeded', section: 'Webhooks', id: 'webhooks' },
+        { title: 'payout.failed', section: 'Webhooks', id: 'webhooks' },
+        { title: 'Error Handling', section: 'Reference', id: 'errors' },
+        { title: 'API Endpoints', section: 'Reference', id: 'endpoints' },
+        { title: 'Best Practices', section: 'Reference', id: 'best-practices' },
+        { title: 'Idempotency', section: 'Best Practices', id: 'best-practices' },
+        { title: 'QR Code', section: 'Payment Intent', id: 'payment-intent' },
+        { title: 'Platform Fee', section: 'Release Funds', id: 'release-funds' },
+        { title: 'Bank Code', section: 'Reference', id: 'endpoints' },
+        { title: 'InstaPay', section: 'Settlement Rails', id: 'release-funds' },
+        { title: 'PESONet', section: 'Settlement Rails', id: 'release-funds' },
+      ];
+
+      searchInput.addEventListener('input', function(e) {
+        const query = e.target.value.toLowerCase().trim();
+        
+        if (query.length < 2) {
+          searchResults.classList.remove('active');
+          return;
+        }
+
+        const results = searchableItems.filter(item => 
+          item.title.toLowerCase().includes(query) ||
+          item.section.toLowerCase().includes(query)
+        );
+
+        if (results.length === 0) {
+          searchResults.innerHTML = '<div class="search-no-results">No results found</div>';
+        } else {
+          searchResults.innerHTML = results.slice(0, 8).map(item => `
+            <div class="search-result-item" data-id="${item.id}">
+              <div class="search-result-title">${item.title}</div>
+              <div class="search-result-section">${item.section}</div>
+            </div>
+          `).join('');
+        }
+
+        searchResults.classList.add('active');
+      });
+
+      searchResults.addEventListener('click', function(e) {
+        const item = e.target.closest('.search-result-item');
+        if (item) {
+          const id = item.dataset.id;
+          const element = document.getElementById(id);
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+            searchResults.classList.remove('active');
+            searchInput.value = '';
+            
+            // Update active nav link
+            document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+            document.querySelector(`a[href="#${id}"]`)?.classList.add('active');
+          }
+        }
+      });
+
+      // Close search results when clicking outside
+      document.addEventListener('click', function(e) {
+        if (!e.target.closest('.search-container')) {
+          searchResults.classList.remove('active');
+        }
+      });
+
+      // Active navigation link on scroll
+      const sections = document.querySelectorAll('section[id]');
+      const navLinks = document.querySelectorAll('.nav-link');
+
+      window.addEventListener('scroll', () => {
+        let current = '';
+        
+        sections.forEach(section => {
+          const sectionTop = section.offsetTop;
+          const sectionHeight = section.clientHeight;
+          
+          if (pageYOffset >= sectionTop - 100) {
+            current = section.getAttribute('id');
+          }
+        });
+
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === `#${current}`) {
+            link.classList.add('active');
+          }
+        });
+      });
+
+      // Mobile sidebar toggle
+      const sidebarToggle = document.getElementById('sidebarToggle');
+      const sidebar = document.getElementById('sidebar');
+
+      sidebarToggle.addEventListener('click', () => {
+        sidebar.classList.toggle('open');
+      });
+
+      // Close sidebar when clicking a link on mobile
+      navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          if (window.innerWidth <= 900) {
+            sidebar.classList.remove('open');
+          }
+        });
+      });
+
+      // Keyboard shortcut for search (Ctrl/Cmd + K)
+      document.addEventListener('keydown', function(e) {
+        if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+          e.preventDefault();
+          searchInput.focus();
+        }
+        
+        // Escape to close search
+        if (e.key === 'Escape') {
+          searchResults.classList.remove('active');
+          searchInput.blur();
+        }
+      });
+    </script>
   </body>
 </html>
