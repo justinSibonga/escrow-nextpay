@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escrow API Flow Documentation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-main: #111111;
+            --text-muted: #666666;
+            --border-color: #e5e5e5;
+            --border-strong: #000000;
+            --code-bg: #f4f4f4;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: var(--text-main);
+            background: var(--bg-color);
+            padding: 40px 20px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Typography */
+        h1 {
+            font-weight: 700;
+            font-size: 2.5rem;
+            letter-spacing: -0.03em;
+            margin-bottom: 1rem;
+            border-bottom: 4px solid var(--border-strong);
+            padding-bottom: 20px;
+        }
+
+        h2 {
+            font-weight: 600;
+            font-size: 1.5rem;
+            letter-spacing: -0.02em;
+            margin-top: 3rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        h2::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: black;
+            margin-right: 12px;
+        }
+
+        h3 {
+            font-weight: 500;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .intro {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 3rem;
+            font-weight: 300;
+        }
+
+        /* Technical Elements */
+        .endpoint {
+            font-family: 'JetBrains Mono', monospace;
+            background: #000;
+            color: #fff;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            display: inline-block;
+        }
+
+        .code-block {
+            font-family: 'JetBrains Mono', monospace;
+            background: var(--code-bg);
+            padding: 20px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            font-size: 0.85rem;
+            overflow-x: auto;
+            white-space: pre;
+            color: #333;
+        }
+
+        ul {
+            list-style: none;
+            border-left: 2px solid var(--border-color);
+            padding-left: 20px;
+            margin: 15px 0;
+        }
+
+        li {
+            margin-bottom: 8px;
+            position: relative;
+        }
+
+        li::before {
+            content: "—";
+            margin-right: 8px;
+            color: var(--text-muted);
+        }
+
+        /* Status Badges - Monochrome */
+        .status-badge {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            padding: 2px 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            font-weight: 600;
+            border: 1px solid #000;
+        }
+
+        .status-created { background: #fff; color: #000; border-style: dotted; }
+        .status-funded { background: #000; color: #fff; }
+        .status-holding { background: #fff; color: #000; border-style: solid; }
+        .status-released { background: #dedede; color: #000; border-color: transparent;}
+        .status-refunded { text-decoration: line-through; border-color: transparent; background: #f4f4f4;}
+
+        /* Flow Diagram - Structural/Line Art style */
+        .flow-visual {
+            margin: 40px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .flow-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        .flow-box {
+            background: #fff;
+            border: 1px solid #000;
+            padding: 12px 20px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            font-weight: 500;
+            min-width: 200px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            box-shadow: 4px 4px 0px rgba(0,0,0,1); /* Brutalist shadow */
+        }
+
+        .flow-box.webhook {
+            border-style: dashed;
+            background: #fff;
+        }
+
+        .flow-box.holding {
+            background: #000;
+            color: #fff;
+            box-shadow: 4px 4px 0px rgba(150,150,150,1);
+        }
+
+        .flow-arrow {
+            font-size: 20px;
+            line-height: 1;
+            color: #000;
+            margin: 10px 0;
+            font-family: sans-serif; /* Cleaner arrow */
+        }
+
+        .flow-branches {
+            display: flex;
+            gap: 40px;
+            width: 100%;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .flow-branch {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            position: relative;
+        }
+        
+        /* Connecting lines for branches */
+        .flow-branch::before {
+            content: '';
+            position: absolute;
+            top: -20px; /* Connect to arrow above */
+            width: 50%; 
+            height: 20px;
+            border-top: 1px solid #000;
+        }
+        .flow-branch:first-child::before {
+            right: 0;
+            border-right: 1px solid #000;
+        }
+        .flow-branch:last-child::before {
+            left: 0;
+            border-left: 1px solid #000;
+        }
+
+        .branch-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 10px;
+            background: #fff;
+            padding: 0 10px;
+            z-index: 2;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 0.9rem;
+            border: 1px solid #000;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        th {
+            background: #000;
+            color: #fff;
+            font-weight: 500;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            h1 { font-size: 2rem; }
+            .flow-branches { flex-direction: column; gap: 0; }
+            .flow-branch { margin-top: 20px; }
+            .flow-branch::before { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Escrow API Flow</h1>
+        <p class="intro">Step-by-step interaction guide for handling escrow transactions from creation to release or refund.</p>
+
+        <div class="section">
+            <h2>1. Create Escrow</h2>
+            <p>Creates a new escrow record and prepares the system to accept funds.</p>
+            
+            <h3>Endpoint</h3>
+            <div class="endpoint">POST /escrows</div>
+            
+            <h3>Request Body</h3>
+            <div class="code-block">{
+  "amount_cents": 150000,
+  "currency": "PHP",
+  "payer_id": "user_001",
+  "payee_id": "user_002",
+  "metadata": {
+    "order_id": "ORD-1001",
+    "service": "Website Development"
+  }
+}</div>
+
+            <h3>Response</h3>
+            <div class="code-block">{
+  "escrow_id": "esc_123456789",
+  "status": "created"
+}</div>
+        </div>
+
+        <div class="section">
+            <h2>2. Create Payment Intent</h2>
+            <p>Creates a payment intent that collects funds from the payer and routes them into the escrow account.</p>
+            
+            <h3>Endpoint</h3>
+            <div class="endpoint">POST /payment-intents</div>
+            
+            <h3>Request Body</h3>
+            <div class="code-block">{
+  "account_id": "escrow_account_id",
+  "amount_cents": 150000,
+  "currency": "PHP",
+  "reference_number": "ESCROW-ORD-1001",
+  "metadata": {
+    "escrow_id": "esc_123456789"
+  }
+}</div>
+
+            <h3>Result</h3>
+            <ul>
+                <li>Customer completes payment</li>
+                <li>Funds are credited to the escrow account</li>
+                <li>Escrow Status: <span class="status-badge status-funded">funded</span></li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>3. Payment Confirmation</h2>
+            <p>The system listens for payment confirmation before locking the funds.</p>
+            
+            <h3>Webhook Event</h3>
+            <div class="endpoint">payment_intent.succeeded</div>
+            
+            <h3>Action</h3>
+            <ul>
+                <li>Verify escrow_id from metadata</li>
+                <li>Lock funds in escrow</li>
+                <li>Prevent withdrawal by payee</li>
+                <li>Escrow Status: <span class="status-badge status-holding">holding</span></li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>4. Release Escrow</h2>
+            <p>Once conditions are met, release the escrow funds to the payee.</p>
+            
+            <h3>Endpoint</h3>
+            <div class="endpoint">POST /escrows/{escrow_id}/release</div>
+            
+            <h3>Action</h3>
+            <ul>
+                <li>Create a payout request</li>
+                <li>Transfer funds from escrow to payee account</li>
+                <li>Escrow Status: <span class="status-badge status-released">released</span></li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>5. Payout Processing</h2>
+            <p>Track payout progress via webhooks.</p>
+            
+            <h3>Possible Events</h3>
+            <div class="code-block">payout.processed
+payout.succeeded
+payout.failed</div>
+            
+            <h3>Final State</h3>
+            <ul>
+                <li>On success → funds received by payee</li>
+                <li>On failure → escrow enters manual review</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>6. Refund Escrow (Optional)</h2>
+            <p>Refunds the payer if the transaction is canceled or conditions fail.</p>
+            
+            <h3>Endpoint</h3>
+            <div class="endpoint">POST /escrows/{escrow_id}/refund</div>
+            
+            <h3>Action</h3>
+            <ul>
+                <li>Funds are returned to the payer</li>
+                <li>Escrow is closed</li>
+                <li>Escrow Status: <span class="status-badge status-refunded">refunded</span></li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>Full API Flow Summary</h2>
+            <div class="flow-visual">
+                <div class="flow-step">
+                    <div class="flow-box">POST /escrows</div>
+                    <div class="flow-arrow">↓</div>
+                </div>
+                <div class="flow-step">
+                    <div class="flow-box">POST /payment-intents</div>
+                    <div class="flow-arrow">↓</div>
+                </div>
+                <div class="flow-step">
+                    <div class="flow-box webhook">Webhook: payment_intent.succeeded</div>
+                    <div class="flow-arrow">↓</div>
+                </div>
+                <div class="flow-step">
+                    <div class="flow-box holding">Escrow holding</div>
+                    <div class="flow-arrow">↓</div>
+                </div>
+                <div class="flow-branches">
+                    <div class="flow-branch">
+                        <div class="branch-label">Release Path</div>
+                        <div class="flow-box">POST /escrows/{id}/release</div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-box">POST /payout-requests</div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-box webhook">Webhook: payout.succeeded</div>
+                    </div>
+                    <div class="flow-branch">
+                        <div class="branch-label">Refund Path</div>
+                        <div class="flow-box">POST /escrows/{id}/refund</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Error Handling</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Scenario</th>
+                        <th>Result</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Payment failed</td>
+                        <td>Escrow remains created</td>
+                    </tr>
+                    <tr>
+                        <td>Payment expired</td>
+                        <td>Escrow canceled</td>
+                    </tr>
+                    <tr>
+                        <td>Payout failed</td>
+                        <td>Escrow flagged for review</td>
+                    </tr>
+                    <tr>
+                        <td>Duplicate release</td>
+                        <td>Idempotent response</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
