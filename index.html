@@ -638,8 +638,7 @@
           <div class="nav-section-title">Escrow Flow</div>
           <a href="#flow" class="nav-link">Complete Flow</a>
           <a href="#payoneer-flow" class="nav-link nav-link-sub">International Payment</a>
-          <a href="#payment-intent" class="nav-link nav-link-sub">Payment Intent (Local)</a>
-          <a href="#payment-webhook" class="nav-link nav-link-sub">Payment Webhook</a>
+          <a href="#payment-success" class="nav-link nav-link-sub">Confirm Funds</a>
           <a href="#release-funds" class="nav-link nav-link-sub">Release Funds</a>
           <a href="#payout-webhook" class="nav-link nav-link-sub">Payout Webhook</a>
         </nav>
@@ -1036,95 +1035,44 @@
               </div>
             </div>
 
-            <!-- Step 4: Create Payment Intent -->
-            <div id="payment-intent">
-              <h4>Step 4: Create Payment Intent (Local Collection)</h4>
-              <p>If the client is local (PH) or paying via QRPH, create a payment intent directly:</p>
+            <!-- Step 4: Confirm Funds -->
+            <div id="payment-success">
+              <h4>Step 4: Confirm Funds Received in Escrow</h4>
+              <p>Once you have initiated the transfer from Payoneer to the NextPay Escrow Account, you must verify that the funds have arrived before allowing the talent to start work.</p>
 
               <h3>Endpoint</h3>
-              <div class="endpoint"><span class="method method-post">POST</span>/v1/payment-intents</div>
-
-              <h3>Request Body</h3>
-              <div class="code-block">{
-  "account_id": "acc_escrow_123",
-  "amount_cents": 150000,
-  "currency": "PHP",
-  "reference_number": "ESCROW-ORD-1001",
-  "metadata": {
-    "contract_id": "contract_ORD-1001",
-    "client_id": "user_001",
-    "talent_id": "user_002",
-    "service": "Website Development"
-  },
-  "payment_method_options": {
-    "qrph": {
-      "resolution": 720
-    }
-  }
-}</div>
+              <div class="endpoint"><span class="method method-get">GET</span>/v1/accounts/{id}/balances</div>
 
               <h3>Response</h3>
               <div class="code-block">{
-  "id": "pi_abc123",
-  "account_id": "acc_escrow_123",
-  "amount_cents": 150000,
-  "currency": "PHP",
-  "status": "pending",
-  "reference_number": "ESCROW-ORD-1001",
-  "payment_method_options": {
-    "qrph": {
-      "resolution": 720,
-      "qr_code": "iVBORw0KG... (base64 encoded QR image)"
+  "available_balance": {
+    "PHP": {
+      "amount_cents": 150000,
+      "currency": "PHP"
     }
   },
-  "expires_at": "2024-12-17T20:00:00Z"
-}</div>
-
-              <div class="section-card">
-                <div class="section-card-title">QR Code Display</div>
-                <p style="margin-bottom: 0">Decode the base64 <code class="code-inline">qr_code</code> string and display it to the client. They can scan it with any Philippine banking app to complete the payment.</p>
-              </div>
-            </div>
-
-            <!-- Step 5: Handle Payment Confirmation -->
-            <div id="payment-webhook">
-              <h4>Step 5: Handle Payment Confirmation Webhook</h4>
-              <p>Listen for the <code class="code-inline">payment_intent.succeeded</code> webhook to confirm payment and lock funds:</p>
-
-              <h3>Webhook Payload</h3>
-              <div class="code-block">{
-  "webhook_event_type": "payment_intent.succeeded",
-  "id": "pi_abc123",
-  "account_id": "acc_escrow_123",
-  "amount_cents": 150000,
-  "currency": "PHP",
-  "status": "succeeded",
-  "reference_number": "ESCROW-ORD-1001",
-  "metadata": {
-    "contract_id": "contract_ORD-1001",
-    "client_id": "user_001",
-    "freelancer_id": "user_002"
-  },
-  "receipt": {
-    "receipt_id": "rcpt_xyz",
-    "transaction_id": "txn_123",
-    "treasury_reference_no": "TREF_112233",
-    "rails_reference_no": "RREF_445566"
+  "current_balance": {
+    "PHP": {
+      "amount_cents": 150000,
+      "currency": "PHP"
+    }
   }
 }</div>
 
-              <h3>Your Backend Action</h3>
-              <ul>
-                <li>Update contract status to <span class="status-badge status-funded">funded</span></li>
-                <li>Lock funds in escrow (prevent withdrawal)</li>
-                <li>Notify talent that work can begin</li>
-                <li>Update escrow status to <span class="status-badge status-holding">holding</span></li>
-              </ul>
+              <div class="section-card">
+                <div class="section-card-title">Next Action</div>
+                <ul style="margin: 0">
+                  <li><strong>Check Balance:</strong> Ensure the <code>available_balance</code> matches the expected contract amount.</li>
+                  <li><strong>Update Status:</strong> Mark the contract as <span class="status-badge status-funded">funded</span> in your database.</li>
+                  <li><strong>Notify Talent:</strong> Inform the talent that funds are secure and work can begin.</li>
+                </ul>
+              </div>
             </div>
 
-            <!-- Step 9: Release Funds -->
+
+            <!-- Step 5: Release Funds -->
             <div id="release-funds">
-              <h4>Step 10: Release Funds to Talent</h4>
+              <h4>Step 5: Release Funds to Talent</h4>
               <p>When the client approves the completed work, create a payout request:</p>
 
               <h3>Endpoint</h3>
@@ -1183,7 +1131,7 @@
 
             <!-- Payout Webhook -->
             <div id="payout-webhook">
-              <h4>Step 11: Handle Payout Confirmation</h4>
+              <h4>Step 6: Handle Payout Confirmation</h4>
               <p>Listen for payout webhooks to confirm successful transfer:</p>
 
               <h3>Webhook Payload</h3>
