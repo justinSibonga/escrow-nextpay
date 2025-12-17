@@ -1609,6 +1609,60 @@ app.post('/webhooks/nextpay/deposit', (req, res) => {
             </div>
           </section>
 
+          <!-- Internal Notes -->
+          <section id="notes" style="background: #fffbeb; border: 2px dashed #f59e0b; padding: 20px; margin-top: 40px;">
+            <h2 style="color: #b45309;">📋 Internal Notes (For Review)</h2>
+            <p style="color: #92400e;"><em>This section is for internal team discussion. Remove before publishing.</em></p>
+            
+            <h4>Future Consideration: EOR Model</h4>
+            <p>If we transition from freelance escrow to <strong>Employer of Record (EOR)</strong> model (full-time employment with Pag-IBIG, SSS, PhilHealth benefits), consider:</p>
+            <ul>
+              <li><strong>Single Partner:</strong> For EOR/payroll, 1 unified gateway (Xendit or Wise) is better than Payoneer + NextPay combo</li>
+              <li><strong>Why:</strong> Monthly recurring payroll needs automation, 2-6 day transfer delays won't work for salary payments</li>
+              <li><strong>Statutory Benefits:</strong> Need to integrate SSS, PhilHealth, Pag-IBIG contribution calculations</li>
+              <li><strong>Tax Withholding:</strong> Platform becomes responsible for BIR withholding tax</li>
+              <li><strong>13th Month Pay:</strong> Required by PH law for full-time employees</li>
+            </ul>
+
+            <h4>Single Partner Options</h4>
+            <table>
+              <thead>
+                <tr>
+                  <th>Provider</th>
+                  <th>Collect</th>
+                  <th>Payout</th>
+                  <th>Best For</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Xendit</strong></td>
+                  <td>USD/EUR (130+ countries)</td>
+                  <td>PHP InstaPay</td>
+                  <td>SEA focus, batch payroll</td>
+                </tr>
+                <tr>
+                  <td><strong>Wise Business</strong></td>
+                  <td>80+ currencies</td>
+                  <td>PHP InstaPay (instant)</td>
+                  <td>Fastest transfers</td>
+                </tr>
+                <tr>
+                  <td><strong>Rapyd</strong></td>
+                  <td>100+ countries</td>
+                  <td>PHP local rails</td>
+                  <td>Global expansion</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <h4>Decision Matrix</h4>
+            <ul>
+              <li><strong>Freelance/Contract model:</strong> Keep Payoneer + NextPay (current docs)</li>
+              <li><strong>EOR with benefits:</strong> Migrate to single partner (Xendit recommended)</li>
+            </ul>
+          </section>
+
           <!-- Footer -->
           <footer style="margin-top: 60px; padding-top: 30px; border-top: 1px solid var(--border-color);">
             <p style="color: var(--text-muted); font-size: 0.9rem;">
