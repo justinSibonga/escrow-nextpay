@@ -715,67 +715,58 @@
               <div class="section-card-title">Payment Gateway Integration</div>
               <p>Our platform is designed for <strong>foreign clients</strong> hiring <strong>Filipino talents</strong>. Here's the recommended payment stack:</p>
               
-              <div style="background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%); border: 2px solid #10b981; border-radius: 12px; padding: 16px; margin: 16px 0;">
-                <h4 style="margin: 0 0 12px 0; color: #059669;"><svg style="width: 16px; height: 16px; vertical-align: middle; margin-right: 4px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Recommended Combo: Payoneer + NextPay</h4>
-                <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
-                  <div style="background: white; padding: 12px 16px; border-radius: 8px; text-align: center;">
-                    <svg style="width: 24px; height: 24px; color: #f472b6;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
-                    <div><strong>Payoneer</strong></div>
-                    <div style="font-size: 12px; color: #666;">Receive USD/EUR</div>
-                  </div>
-                  <svg style="width: 24px; height: 24px; color: #666;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                  <div style="background: white; padding: 12px 16px; border-radius: 8px; text-align: center;">
-                    <svg style="width: 24px; height: 24px; color: #10b981;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
-                    <div><strong>Convert</strong></div>
-                    <div style="font-size: 12px; color: #666;">USD/EUR to PHP</div>
-                  </div>
-                  <svg style="width: 24px; height: 24px; color: #666;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                  <div style="background: white; padding: 12px 16px; border-radius: 8px; text-align: center;">
-                    <svg style="width: 24px; height: 24px; color: #3b82f6;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
-                    <div><strong>NextPay</strong></div>
-                    <div style="font-size: 12px; color: #666;">Escrow + Payout</div>
-                  </div>
+              <!-- Simple Flow -->
+              <div style="border: 2px solid #000; padding: 16px; margin: 16px 0;">
+                <div style="font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px;">Recommended Stack</div>
+                <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem;">
+                  <span style="background: #000; color: #fff; padding: 6px 12px;">Payoneer</span>
+                  <span>→</span>
+                  <span style="border: 1px solid #000; padding: 6px 12px;">USD/EUR to PHP</span>
+                  <span>→</span>
+                  <span style="background: #000; color: #fff; padding: 6px 12px;">NextPay</span>
+                  <span>→</span>
+                  <span style="border: 1px solid #000; padding: 6px 12px;">Talent Bank</span>
                 </div>
               </div>
 
-              <h4 style="margin-top: 20px; margin-bottom: 8px;"><svg style="width: 16px; height: 16px; vertical-align: middle; margin-right: 4px; color: #f472b6;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg> Step 1: Receive International Payments</h4>
+              <h4 style="margin-top: 20px; margin-bottom: 8px;">Step 1: Receive International Payments</h4>
               <table style="margin-bottom: 16px;">
                 <thead>
                   <tr>
                     <th>Provider</th>
-                    <th>Features</th>
-                    <th>Why Use It</th>
+                    <th>Role</th>
+                    <th>Why</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
                     <td><strong>Payoneer</strong></td>
-                    <td>USD/EUR accounts, multi-currency, auto-convert to PHP</td>
-                    <td>Trusted by 2,000+ marketplaces (Upwork, Fiverr)</td>
+                    <td>Collect USD/EUR from foreign clients, convert to PHP</td>
+                    <td>Trusted by Upwork, Fiverr, 2,000+ marketplaces</td>
                   </tr>
                 </tbody>
               </table>
 
-              <h4 style="margin-bottom: 8px;"><svg style="width: 16px; height: 16px; vertical-align: middle; margin-right: 4px; color: #3b82f6;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg> Step 2: Escrow &amp; Payout (Philippines)</h4>
+              <h4 style="margin-bottom: 8px;">Step 2: Escrow & Payout (Philippines)</h4>
               <table style="margin-bottom: 16px;">
                 <thead>
                   <tr>
                     <th>Provider</th>
-                    <th>Features</th>
-                    <th>Why Use It</th>
+                    <th>Role</th>
+                    <th>Why</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
                     <td><strong>NextPay</strong></td>
-                    <td>Escrow holding, InstaPay, PESONet, PHP payouts</td>
+                    <td>Hold PHP in escrow, payout via InstaPay/PESONet</td>
                     <td>BSP-regulated, instant local transfers</td>
                   </tr>
                 </tbody>
               </table>
 
-              <div style="background: #dbeafe; border: 1px solid #3b82f6; border-radius: 8px; padding: 12px; margin-top: 8px;">
-                <strong><svg style="width: 14px; height: 14px; vertical-align: middle; margin-right: 4px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> How it works:</strong> Foreign client pays via Payoneer (USD/EUR) → Payoneer converts & transfers PHP to your NextPay account → NextPay holds funds in escrow → Upon approval, NextPay pays Filipino talent via InstaPay/PESONet.
+              <div style="background: #f4f4f4; border-left: 3px solid #000; padding: 12px; margin-top: 8px;">
+                <strong>Flow:</strong> Client pays USD/EUR (Payoneer) → Convert & transfer to PHP → Hold in escrow (NextPay) → Release to talent bank.
               </div>
             </div>
           </section>
@@ -798,10 +789,7 @@
                 <div class="entity-title">Account</div>
                 <div class="entity-desc">A financial wallet that holds funds. Can be partner-owned or merchant-owned.</div>
               </div>
-              <div class="entity-card">
-                <div class="entity-title">Payment Intent</div>
-                <div class="entity-desc">A request to collect funds from a customer (money-in via QR code).</div>
-              </div>
+
               <div class="entity-card">
                 <div class="entity-title">Payout Request</div>
                 <div class="entity-desc">A request to disburse funds to a bank account (money-out).</div>
@@ -882,8 +870,9 @@
             <h2>Complete Escrow Flow</h2>
 
             <div class="flow-visual">
+              <!-- Phase 1: Platform -->
               <div class="flow-step">
-                <div class="flow-box">1. Client creates a job post<br><small style="font-weight: normal; opacity: 0.8;">(objectives, budget, duration: 30/60/90 days)</small></div>
+                <div class="flow-box">1. Client creates a job post<br><small style="font-weight: normal; opacity: 0.7;">(objectives, budget, trial: 30/60/90 days)</small></div>
                 <div class="flow-arrow">↓</div>
               </div>
               <div class="flow-step">
@@ -891,70 +880,131 @@
                 <div class="flow-arrow">↓</div>
               </div>
               <div class="flow-step">
-                <div class="flow-box">3. Client sends offer to selected talent</div>
+                <div class="flow-box">3. Client sends offer → Talent accepts</div>
+                <div class="flow-arrow">↓</div>
+              </div>
+
+              <!-- Phase 2: Payoneer Collection -->
+              <div class="flow-step">
+                <div class="flow-box" style="background: #fff0f6; border-color: #ec4899;">
+                  <span style="background: #ec4899; color: #fff; font-size: 0.65rem; padding: 2px 6px; border-radius: 3px; margin-right: 8px;">PAYONEER</span>
+                  4. Client pays in USD/EUR<br>
+                  <small style="font-weight: normal; opacity: 0.7;">Hosted checkout → payment.charged webhook</small>
+                </div>
                 <div class="flow-arrow">↓</div>
               </div>
               <div class="flow-step">
-                <div class="flow-box">4. Offer negotiation<br><small style="font-weight: normal; opacity: 0.8;">↺ Talent reviews & negotiates ↔ Client revises offer</small></div>
+                <div class="flow-box" style="border-style: dashed; background: #fefce8;">
+                  <span style="background: #eab308; color: #fff; font-size: 0.65rem; padding: 2px 6px; border-radius: 3px; margin-right: 8px;">AUTO</span>
+                  5. Transfer to PH bank<br>
+                  <small style="font-weight: normal; opacity: 0.7;">Payoneer API or unified gateway</small>
+                </div>
+                <div class="flow-arrow">↓</div>
+              </div>
+
+              <!-- Phase 3: NextPay Escrow -->
+              <div class="flow-step">
+                <div class="flow-box holding">
+                  <span style="background: #fff; color: #000; font-size: 0.65rem; padding: 2px 6px; border-radius: 3px; margin-right: 8px;">NEXTPAY</span>
+                  6. Funds held in escrow<br>
+                  <small style="font-weight: normal; opacity: 0.7;">deposit.confirmed webhook → Trial period starts</small>
+                </div>
+                <div class="flow-arrow">↓</div>
+              </div>
+
+              <!-- Phase 4: Work & Approval -->
+              <div class="flow-step">
+                <div class="flow-box">7. Trial period → Talent delivers work</div>
                 <div class="flow-arrow">↓</div>
               </div>
               <div class="flow-step">
-                <div class="flow-box">5. Talent accepts offer</div>
-                <div class="flow-arrow">↓</div>
-              </div>
-              <div class="flow-step">
-                <div class="flow-box">6. Collect payment from foreign client</div>
-                <div class="flow-arrow">↓</div>
-              </div>
-              <div class="flow-step">
-                <div class="flow-box api" style="background: linear-gradient(135deg, #fce7f3 0%, #fbcfe8 100%); border-color: #f472b6;"><svg style="width: 16px; height: 16px; vertical-align: middle; margin-right: 4px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg> Payoneer<br><small style="font-weight: normal; opacity: 0.8;">Client pays in USD/EUR • Converted to PHP</small></div>
-                <div class="flow-arrow">↓</div>
-              </div>
-              <div class="flow-step">
-                <div class="flow-box webhook">7. Transfer to escrow account</div>
-                <div class="flow-arrow">↓</div>
-              </div>
-              <div class="flow-step">
-                <div class="flow-box holding"><svg style="width: 16px; height: 16px; vertical-align: middle; margin-right: 4px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg> NextPay Escrow<br><small style="font-weight: normal; opacity: 0.8;">8. Funds held in PHP</small></div>
-                <div class="flow-arrow">↓</div>
-              </div>
-              <div class="flow-step">
-                <div class="flow-box">9. Trial period ends<br><small style="font-weight: normal; opacity: 0.8;">Talent delivers work • Client reviews performance</small></div>
-                <div class="flow-arrow">↓</div>
-              </div>
-              <div class="flow-step">
-                <div class="flow-box">10. Client decision<br><small style="font-weight: normal; opacity: 0.8;">Approve deliverable or raise dispute</small></div>
+                <div class="flow-box">8. Client reviews & decides</div>
                 <div class="flow-arrow">↓</div>
               </div>
               
               <!-- Branching paths -->
-              <div style="display: flex; gap: 40px; justify-content: center; margin: 10px 0;">
-                <!-- Complete path -->
+              <div style="display: flex; gap: 30px; justify-content: center; margin: 8px 0;">
                 <div style="text-align: center;">
-                  <div class="flow-box" style="background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%); border-color: #86efac;"><svg style="width: 14px; height: 14px; vertical-align: middle; margin-right: 2px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Complete</div>
+                  <div class="flow-box" style="background: #f0fdf4; border-color: #22c55e; min-width: 160px;"><span style="color: #16a34a;">✓</span> Approved</div>
                   <div class="flow-arrow">↓</div>
-                  <div class="flow-box">Approve & release<br><small style="font-weight: normal; opacity: 0.8;">to talent</small></div>
+                  <div class="flow-box" style="min-width: 160px;">Release payment</div>
                 </div>
-                <!-- Dispute path -->
                 <div style="text-align: center;">
-                  <div class="flow-box" style="background: linear-gradient(135deg, #fef9c3 0%, #fde047 100%); border-color: #facc15;"><svg style="width: 14px; height: 14px; vertical-align: middle; margin-right: 2px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg> Dispute</div>
+                  <div class="flow-box" style="background: #fefce8; border-color: #eab308; min-width: 160px;"><span style="color: #ca8a04;">!</span> Disputed</div>
                   <div class="flow-arrow">↓</div>
-                  <div class="flow-box">Resolution process<br><small style="font-weight: normal; opacity: 0.8;">Refund or partial release</small></div>
+                  <div class="flow-box" style="min-width: 160px;">Refund or split</div>
                 </div>
               </div>
               
               <div class="flow-arrow">↓</div>
+
+              <!-- Phase 5: NextPay Payout -->
               <div class="flow-step">
-                <div class="flow-box holding"><svg style="width: 16px; height: 16px; vertical-align: middle; margin-right: 4px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg> NextPay API<br><small style="font-weight: normal; opacity: 0.8;">11. Pay Filipino talent in PHP</small></div>
+                <div class="flow-box holding">
+                  <span style="background: #fff; color: #000; font-size: 0.65rem; padding: 2px 6px; border-radius: 3px; margin-right: 8px;">NEXTPAY</span>
+                  9. Payout to talent bank<br>
+                  <small style="font-weight: normal; opacity: 0.7;">POST /v1/payout-requests → InstaPay/PESONet</small>
+                </div>
                 <div class="flow-arrow">↓</div>
               </div>
               <div class="flow-step">
-                <div class="flow-box webhook">12. payout.succeeded (Webhook)<br><small style="font-weight: normal; opacity: 0.8;">InstaPay/PESONet transfer complete</small></div>
+                <div class="flow-box webhook">10. payout.succeeded (Webhook)</div>
                 <div class="flow-arrow">↓</div>
               </div>
               <div class="flow-step">
-                <div class="flow-box">13. Contract complete</div>
+                <div class="flow-box" style="background: #f0fdf4; border-color: #22c55e;">✓ Contract Complete</div>
               </div>
+            </div>
+
+            <!-- API Quick Reference -->
+            <div class="section-card" style="margin-top: 30px;">
+              <div class="section-card-title">API Quick Reference</div>
+              <table>
+                <thead>
+                  <tr>
+                    <th style="width: 50px;">Step</th>
+                    <th style="width: 90px;">Provider</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1-3</td>
+                    <td>Platform</td>
+                    <td>Job post → Offer → Accept</td>
+                  </tr>
+                  <tr>
+                    <td>4</td>
+                    <td><strong style="color: #ec4899;">Payoneer</strong></td>
+                    <td><code class="code-inline">POST /api/lists</code> → Hosted checkout</td>
+                  </tr>
+                  <tr>
+                    <td>5</td>
+                    <td><strong style="color: #eab308;">Auto</strong></td>
+                    <td>Payoneer API → PH bank (see options below)</td>
+                  </tr>
+                  <tr>
+                    <td>6</td>
+                    <td><strong>NextPay</strong></td>
+                    <td><code class="code-inline">deposit.confirmed</code> webhook → Escrow funded</td>
+                  </tr>
+                  <tr>
+                    <td>7-8</td>
+                    <td>Platform</td>
+                    <td>Trial period → Client approval</td>
+                  </tr>
+                  <tr>
+                    <td>9</td>
+                    <td><strong>NextPay</strong></td>
+                    <td><code class="code-inline">POST /v1/payout-requests</code> → Release</td>
+                  </tr>
+                  <tr>
+                    <td>10</td>
+                    <td><strong>NextPay</strong></td>
+                    <td><code class="code-inline">payout.succeeded</code> webhook → Complete</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
 
             <!-- Step 3: International Payment (Payoneer) -->
@@ -1011,8 +1061,8 @@
               </div>
 
               <div class="section-card">
-                <div class="section-card-title">3. Handle Notification (Webhook)</div>
-                <p>Payoneer sends an asynchronous notification to your <code>notificationUrl</code> when the status changes.</p>
+                <div class="section-card-title">3. Handle Payment Notification (Webhook)</div>
+                <p>Payoneer sends an asynchronous notification to your <code>notificationUrl</code> when the payment status changes.</p>
                 
                 <h3>Payload (CHARGED)</h3>
                 <div class="code-block">{
@@ -1027,18 +1077,187 @@
   },
   "transactionId": "ORD-1001-PAYMENT",
   "resultInfo": "Transaction succeeded"
+              </div>
+
+              <!-- Automation Options -->
+              <div class="section-card" style="border: 2px solid #000; background: #fff;">
+                <div class="section-card-title">4. Transfer to NextPay Escrow — Automation Options</div>
+                <p>As your platform scales, manual transfers become a bottleneck. Here are <strong>3 automation strategies</strong>:</p>
+
+                <!-- Option A: Payoneer API -->
+                <h4 style="margin-top: 20px; margin-bottom: 8px;">Option A: Payoneer Withdrawal API (Recommended for Payoneer users)</h4>
+                <p>Use Payoneer's <strong>Withdraw API</strong> to programmatically transfer funds to your PH bank account:</p>
+                
+                <div class="endpoint"><span class="method method-post">POST</span>https://api.payoneer.com/v4/programs/{program_id}/payees/{payee_id}/withdraw</div>
+                
+                <div class="code-block">{
+  "payee_id": "your_platform_payee_id",
+  "amount": 3000.00,
+  "currency": "USD",
+  "destination": {
+    "type": "bank_account",
+    "bank_account_id": "ba_philippines_001"
+  },
+  "client_reference_id": "ORD-1001-WITHDRAWAL"
+}</div>
+
+                <div style="background: #f0fdf4; border: 1px solid #22c55e; border-radius: 8px; padding: 12px; margin: 12px 0;">
+                  <strong>✓ Benefit:</strong> Fully automated withdrawal triggered by your backend when <code>payment.charged</code> webhook is received.
+                </div>
+
+                <!-- Option B: Unified Gateway -->
+                <h4 style="margin-top: 24px; margin-bottom: 8px;">Option B: Unified Gateway (Best for Scale)</h4>
+                <p>Replace Payoneer + NextPay with a <strong>single gateway</strong> that handles both international collection AND PHP payout:</p>
+                
+                <table style="margin: 12px 0;">
+                  <thead>
+                    <tr>
+                      <th>Provider</th>
+                      <th>International</th>
+                      <th>PHP Payout</th>
+                      <th>Escrow</th>
+                      <th>Best For</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><strong>Xendit</strong></td>
+                      <td>✓ 130+ countries</td>
+                      <td>✓ InstaPay</td>
+                      <td>✓ Hold funds</td>
+                      <td>SEA marketplaces</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Wise Business</strong></td>
+                      <td>✓ 80+ currencies</td>
+                      <td>✓ InstaPay (instant)</td>
+                      <td>✗ External</td>
+                      <td>Fast transfers</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Rapyd</strong></td>
+                      <td>✓ 100+ countries</td>
+                      <td>✓ Local rails</td>
+                      <td>✓ Virtual accounts</td>
+                      <td>Global expansion</td>
+                    </tr>
+                    <tr>
+                      <td><strong>HitPay</strong></td>
+                      <td>✓ 150 currencies</td>
+                      <td>✓ PHP bank</td>
+                      <td>✓ Split payments</td>
+                      <td>Easy integration</td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <div style="background: #dbeafe; border: 1px solid #3b82f6; border-radius: 8px; padding: 12px; margin: 12px 0;">
+                  <strong>✓ Benefit:</strong> Single API for collection + payout. No currency conversion delays. Example with Xendit:
+                </div>
+
+                <div class="code-block">// Xendit: Collect USD, payout PHP - single API
+// 1. Create invoice (USD)
+POST /v2/invoices
+{ "external_id": "ORD-1001", "amount": 3000, "currency": "USD" }
+
+// 2. When paid, create disbursement (PHP)
+POST /xendit/disbursements
+{ "external_id": "ORD-1001-PAYOUT", "amount": 168000, "currency": "PHP",
+  "bank_code": "BPI", "account_holder_name": "John Doe",
+  "account_number": "1234567890" }</div>
+
+                <!-- Option C: Keep NextPay + Automate Payoneer -->
+                <h4 style="margin-top: 24px; margin-bottom: 8px;">Option C: Keep Current Stack + Auto-Withdrawal</h4>
+                <p>If you want to keep Payoneer + NextPay, automate the withdrawal:</p>
+                
+                <ul>
+                  <li><strong>Payoneer Balance Webhook:</strong> Listen for <code>balance.available</code> event</li>
+                  <li><strong>Trigger Withdrawal API:</strong> Automatically call withdraw endpoint</li>
+                  <li><strong>NextPay Deposit Webhook:</strong> Detect when funds arrive via <code>deposit.confirmed</code></li>
+                </ul>
+
+                <div class="code-block">// Automated flow in your backend:
+app.post('/webhooks/payoneer/balance', (req, res) => {
+  if (req.body.event === 'balance.available') {
+    // Auto-trigger withdrawal to PH bank
+    await payoneerAPI.withdraw({
+      amount: req.body.available_balance,
+      destination: 'ba_nextpay_account'
+    });
+  }
+});
+
+app.post('/webhooks/nextpay/deposit', (req, res) => {
+  if (req.body.webhook_event_type === 'deposit.confirmed') {
+    // Match to contract, mark as funded
+    await updateContractStatus(req.body.reference, 'funded');
+  }
+});</div>
+
+                <!-- Comparison -->
+                <h4 style="margin-top: 24px; margin-bottom: 8px;">Which Option to Choose?</h4>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Platform Stage</th>
+                      <th>Recommended</th>
+                      <th>Why</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><strong>Starting out</strong> (&lt;50 tx/mo)</td>
+                      <td>Option C (Auto-Withdrawal)</td>
+                      <td>Keep Payoneer brand trust, low setup</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Growing</strong> (50-500 tx/mo)</td>
+                      <td>Option A (Payoneer API)</td>
+                      <td>Full automation, existing relationships</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Scaling</strong> (500+ tx/mo)</td>
+                      <td>Option B (Xendit/Rapyd)</td>
+                      <td>Single API, faster transfers, lower fees</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="section-card" style="background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%); border: 2px solid #3b82f6;">
+                <div class="section-card-title"><svg style="width: 16px; height: 16px; vertical-align: middle; margin-right: 4px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg> 5. Detect Deposit in NextPay (Automated)</div>
+                <p>Listen for the <code>deposit.confirmed</code> webhook to automatically detect when Payoneer funds arrive in your NextPay escrow account.</p>
+                
+                <h3>Webhook Payload</h3>
+                <div class="code-block">{
+  "webhook_event_type": "deposit.confirmed",
+  "id": "dep_abc123",
+  "account_id": "acc_escrow_123",
+  "amount_cents": 168000,
+  "currency": "PHP",
+  "source": "bank_transfer",
+  "reference": "PAYONEER-WD-789456",
+  "confirmed_at": "2024-12-15T10:30:00Z"
 }</div>
                 
-                <p style="margin-top: 12px; font-size: 0.9rem; color: var(--text-muted);">
-                  <strong>Next Step:</strong> Confirm the funds in your Payoneer account, then initiate a withdrawal/transfer to your <strong>NextPay Escrow Account</strong> via bank transfer (using the bank details from Step 2).
-                </p>
+                <h3 style="margin-top: 16px;">Your Backend Action</h3>
+                <ul style="margin: 0;">
+                  <li><strong>Match Reference:</strong> Link the deposit to the original contract using the reference or amount</li>
+                  <li><strong>Update Contract:</strong> Mark status as <span class="status-badge status-funded">funded</span></li>
+                  <li><strong>Notify Talent:</strong> Inform talent that funds are secured and work can begin</li>
+                  <li><strong>Start Trial:</strong> Begin the trial period countdown (30/60/90 days)</li>
+                </ul>
               </div>
             </div>
 
-            <!-- Step 4: Confirm Funds -->
+            <!-- Step 6: Confirm Funds (Alternative - Polling) -->
             <div id="payment-success">
-              <h4>Step 4: Confirm Funds Received in Escrow</h4>
-              <p>Once you have initiated the transfer from Payoneer to the NextPay Escrow Account, you must verify that the funds have arrived before allowing the talent to start work.</p>
+              <h4>Step 6: Confirm Funds (Polling Method)</h4>
+              <p>While the <code>deposit.confirmed</code> webhook (Step 5 above) is the <strong>recommended primary method</strong>, you can also use polling as a backup to verify funds have arrived in the escrow account.</p>
+
+              <div style="background: #fef3c7; border: 1px solid #f59e0b; border-radius: 8px; padding: 12px; margin-bottom: 16px;">
+                <strong><svg style="width: 14px; height: 14px; vertical-align: middle; margin-right: 4px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg> Note:</strong> Use polling only as a backup if webhooks fail. Primary detection should be via <code>deposit.confirmed</code> webhook for real-time updates.
+              </div>
 
               <h3>Endpoint</h3>
               <div class="endpoint"><span class="method method-get">GET</span>/v1/accounts/{id}/balances</div>
@@ -1047,32 +1266,33 @@
               <div class="code-block">{
   "available_balance": {
     "PHP": {
-      "amount_cents": 150000,
+      "amount_cents": 168000,
       "currency": "PHP"
     }
   },
   "current_balance": {
     "PHP": {
-      "amount_cents": 150000,
+      "amount_cents": 168000,
       "currency": "PHP"
     }
   }
 }</div>
 
               <div class="section-card">
-                <div class="section-card-title">Next Action</div>
+                <div class="section-card-title">Polling Strategy</div>
                 <ul style="margin: 0">
-                  <li><strong>Check Balance:</strong> Ensure the <code>available_balance</code> matches the expected contract amount.</li>
-                  <li><strong>Update Status:</strong> Mark the contract as <span class="status-badge status-funded">funded</span> in your database.</li>
-                  <li><strong>Notify Talent:</strong> Inform the talent that funds are secure and work can begin.</li>
+                  <li><strong>Frequency:</strong> Check every 15-30 minutes during expected arrival window</li>
+                  <li><strong>Timeout:</strong> Stop polling after 7 business days (max transfer time)</li>
+                  <li><strong>Comparison:</strong> Compare balance before/after to detect new deposits</li>
+                  <li><strong>Fallback:</strong> Alert admin if funds not detected within expected timeframe</li>
                 </ul>
               </div>
             </div>
 
 
-            <!-- Step 5: Release Funds -->
+            <!-- Step 7: Release Funds -->
             <div id="release-funds">
-              <h4>Step 5: Release Funds to Talent</h4>
+              <h4>Step 7: Release Funds to Talent</h4>
               <p>When the client approves the completed work, create a payout request:</p>
 
               <h3>Endpoint</h3>
@@ -1131,7 +1351,7 @@
 
             <!-- Payout Webhook -->
             <div id="payout-webhook">
-              <h4>Step 6: Handle Payout Confirmation</h4>
+              <h4>Step 8: Handle Payout Confirmation</h4>
               <p>Listen for payout webhooks to confirm successful transfer:</p>
 
               <h3>Webhook Payload</h3>
