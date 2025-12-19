@@ -12,595 +12,7 @@
       rel="stylesheet"
     />
 
-    <style>
-      :root {
-        --bg-color: #ffffff;
-        --text-main: #111111;
-        --text-muted: #666666;
-        --border-color: #e5e5e5;
-        --border-strong: #000000;
-        --code-bg: #f4f4f4;
-        --sidebar-width: 280px;
-        --header-height: 60px;
-      }
-
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
-      body {
-        font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
-        line-height: 1.6;
-        color: var(--text-main);
-        background: var(--bg-color);
-        -webkit-font-smoothing: antialiased;
-      }
-
-      /* Layout */
-      .layout {
-        display: flex;
-        min-height: 100vh;
-      }
-
-      /* Sidebar */
-      .sidebar {
-        width: var(--sidebar-width);
-        background: #fafafa;
-        border-right: 1px solid var(--border-color);
-        position: fixed;
-        top: 0;
-        left: 0;
-        height: 100vh;
-        overflow-y: auto;
-        z-index: 100;
-      }
-
-      .sidebar-header {
-        padding: 20px;
-        border-bottom: 1px solid var(--border-color);
-        background: #fff;
-        position: sticky;
-        top: 0;
-        z-index: 10;
-      }
-
-      .sidebar-header .search-input {
-        margin-top: 16px;
-      }
-
-      .sidebar-logo {
-        font-weight: 700;
-        font-size: 1.1rem;
-        letter-spacing: -0.02em;
-        margin-bottom: 4px;
-      }
-
-      .sidebar-badge {
-        display: inline-block;
-        background: #000;
-        color: #fff;
-        padding: 2px 8px;
-        font-size: 0.65rem;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-      }
-
-      /* Search */
-      .search-container {
-        position: relative;
-      }
-
-      .search-input {
-        width: 100%;
-        padding: 10px 12px 10px 36px;
-        border: 1px solid var(--border-color);
-        border-radius: 6px;
-        font-size: 0.9rem;
-        font-family: inherit;
-        background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E") 10px center no-repeat;
-        transition: border-color 0.2s, box-shadow 0.2s;
-      }
-
-      .search-input:focus {
-        outline: none;
-        border-color: #000;
-        box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
-      }
-
-      .search-input::placeholder {
-        color: #999;
-      }
-
-      /* Navigation */
-      .nav-section {
-        padding: 16px 0;
-      }
-
-      .nav-section-title {
-        padding: 8px 20px;
-        font-size: 0.7rem;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-        color: var(--text-muted);
-      }
-
-      .nav-link {
-        display: block;
-        padding: 8px 20px;
-        font-size: 0.9rem;
-        color: var(--text-muted);
-        text-decoration: none;
-        transition: all 0.15s;
-        border-left: 3px solid transparent;
-      }
-
-      .nav-link:hover {
-        color: var(--text-main);
-        background: #f0f0f0;
-      }
-
-      .nav-link.active {
-        color: var(--text-main);
-        background: #fff;
-        border-left-color: #000;
-        font-weight: 500;
-      }
-
-      .nav-link-sub {
-        padding-left: 32px;
-        font-size: 0.85rem;
-      }
-
-      /* Main Content */
-      .main {
-        flex: 1;
-        margin-left: var(--sidebar-width);
-        padding: 40px 60px;
-        display: flex;
-        justify-content: center;
-      }
-
-      .container {
-        max-width: 800px;
-        width: 100%;
-      }
-
-      /* Typography */
-      h1 {
-        font-weight: 700;
-        font-size: 2.25rem;
-        letter-spacing: -0.03em;
-        margin-bottom: 1rem;
-      }
-
-      h2 {
-        font-weight: 600;
-        font-size: 1.5rem;
-        letter-spacing: -0.02em;
-        margin-top: 3rem;
-        margin-bottom: 1.5rem;
-        padding-top: 1rem;
-        display: flex;
-        align-items: center;
-      }
-
-      h2::before {
-        content: "";
-        display: inline-block;
-        width: 8px;
-        height: 8px;
-        background: black;
-        margin-right: 12px;
-      }
-
-      h3 {
-        font-weight: 500;
-        font-size: 0.9rem;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        color: var(--text-muted);
-        margin-top: 1.5rem;
-        margin-bottom: 0.75rem;
-      }
-
-      h4 {
-        font-weight: 600;
-        font-size: 1.1rem;
-        margin-top: 2rem;
-        margin-bottom: 0.75rem;
-      }
-
-      p {
-        margin-bottom: 1rem;
-        color: #333;
-      }
-
-      .intro {
-        font-size: 1.1rem;
-        color: var(--text-muted);
-        margin-bottom: 1rem;
-        font-weight: 300;
-      }
-
-      /* API Info Card */
-      .api-info {
-        background: #f8f9fa;
-        border: 1px solid var(--border-color);
-        padding: 24px;
-        margin: 20px 0 30px;
-      }
-
-      .api-info-row {
-        display: flex;
-        margin-bottom: 12px;
-      }
-
-      .api-info-row:last-child {
-        margin-bottom: 0;
-      }
-
-      .api-info-label {
-        font-weight: 600;
-        min-width: 140px;
-        color: var(--text-muted);
-        font-size: 0.9rem;
-      }
-
-      .api-info-value {
-        font-family: "JetBrains Mono", monospace;
-        font-size: 0.9rem;
-      }
-
-      /* Technical Elements */
-      .endpoint {
-        font-family: "JetBrains Mono", monospace;
-        background: #000;
-        color: #fff;
-        padding: 8px 12px;
-        border-radius: 4px;
-        font-size: 0.9rem;
-        display: inline-block;
-      }
-
-      .method {
-        display: inline-block;
-        padding: 2px 8px;
-        border-radius: 3px;
-        font-size: 0.75rem;
-        font-weight: 600;
-        text-transform: uppercase;
-        margin-right: 8px;
-      }
-
-      .method-get { background: #dbeafe; color: #1d4ed8; }
-      .method-post { background: #dcfce7; color: #15803d; }
-      .method-patch { background: #fef3c7; color: #b45309; }
-      .method-delete { background: #fee2e2; color: #b91c1c; }
-
-      .code-block {
-        font-family: "JetBrains Mono", monospace;
-        background: var(--code-bg);
-        padding: 20px;
-        border-radius: 6px;
-        border: 1px solid var(--border-color);
-        font-size: 0.85rem;
-        overflow-x: auto;
-        white-space: pre;
-        color: #333;
-      }
-
-      .code-inline {
-        font-family: "JetBrains Mono", monospace;
-        background: var(--code-bg);
-        padding: 2px 6px;
-        border-radius: 3px;
-        font-size: 0.85rem;
-      }
-
-      ul {
-        list-style: none;
-        border-left: 2px solid var(--border-color);
-        padding-left: 20px;
-        margin: 15px 0;
-      }
-
-      li {
-        margin-bottom: 8px;
-        position: relative;
-      }
-
-      li::before {
-        content: "—";
-        margin-right: 8px;
-        color: var(--text-muted);
-      }
-
-      /* Status Badges */
-      .status-badge {
-        font-family: "JetBrains Mono", monospace;
-        font-size: 0.75rem;
-        padding: 2px 8px;
-        border-radius: 4px;
-        text-transform: uppercase;
-        font-weight: 600;
-        border: 1px solid #000;
-      }
-
-      .status-created { background: #fff; color: #000; border-style: dotted; }
-      .status-funded { background: #000; color: #fff; }
-      .status-holding { background: #fff; color: #000; border-style: solid; }
-      .status-released { background: #dedede; color: #000; border-color: transparent; }
-      .status-refunded { text-decoration: line-through; border-color: transparent; background: #f4f4f4; }
-      .status-pending { background: #fef3c7; color: #b45309; border-color: #f59e0b; }
-      .status-succeeded { background: #dcfce7; color: #15803d; border-color: #10b981; }
-      .status-failed { background: #fee2e2; color: #b91c1c; border-color: #ef4444; }
-
-      /* Flow Diagram */
-      .flow-visual {
-        margin: 40px 0;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-      }
-
-      .flow-step {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-      }
-
-      .flow-box {
-        background: #fff;
-        border: 1px solid #000;
-        padding: 12px 20px;
-        font-family: "JetBrains Mono", monospace;
-        font-size: 0.85rem;
-        font-weight: 500;
-        min-width: 280px;
-        text-align: center;
-        position: relative;
-        z-index: 2;
-        box-shadow: 4px 4px 0px rgba(0, 0, 0, 1);
-      }
-
-      .flow-box.webhook {
-        border-style: dashed;
-        background: #fef3c7;
-      }
-
-      .flow-box.holding {
-        background: #000;
-        color: #fff;
-        box-shadow: 4px 4px 0px rgba(150, 150, 150, 1);
-      }
-
-      .flow-box.api {
-        background: #dbeafe;
-        border-color: #3b82f6;
-      }
-
-      .flow-arrow {
-        font-size: 20px;
-        line-height: 1;
-        color: #000;
-        margin: 10px 0;
-        font-family: sans-serif;
-      }
-
-      /* Tables */
-      table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 10px;
-        font-size: 0.9rem;
-        border: 1px solid #000;
-      }
-
-      th, td {
-        padding: 15px;
-        text-align: left;
-        border-bottom: 1px solid #e5e5e5;
-      }
-
-      th {
-        background: #000;
-        color: #fff;
-        font-weight: 500;
-        text-transform: uppercase;
-        font-size: 0.8rem;
-        letter-spacing: 0.05em;
-      }
-
-      tr:last-child td {
-        border-bottom: none;
-      }
-
-      /* Section Cards */
-      .section-card {
-        border: 1px solid var(--border-color);
-        padding: 24px;
-        margin: 20px 0;
-        background: #fafafa;
-      }
-
-      .section-card-title {
-        font-weight: 600;
-        font-size: 1rem;
-        margin-bottom: 12px;
-      }
-
-      /* Webhook Event List */
-      .webhook-list {
-        display: grid;
-        gap: 12px;
-        margin: 15px 0;
-      }
-
-      .webhook-item {
-        display: flex;
-        align-items: flex-start;
-        gap: 12px;
-        padding: 12px;
-        background: #f8f9fa;
-        border: 1px solid var(--border-color);
-      }
-
-      .webhook-event {
-        font-family: "JetBrains Mono", monospace;
-        font-size: 0.85rem;
-        background: #000;
-        color: #fff;
-        padding: 4px 8px;
-        border-radius: 3px;
-        white-space: nowrap;
-      }
-
-      .webhook-desc {
-        font-size: 0.9rem;
-        color: var(--text-muted);
-      }
-
-      /* Entity Cards */
-      .entity-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-        gap: 16px;
-        margin: 20px 0;
-      }
-
-      .entity-card {
-        border: 2px solid #000;
-        padding: 20px;
-        background: #fff;
-      }
-
-      .entity-title {
-        font-weight: 600;
-        font-size: 1rem;
-        margin-bottom: 8px;
-      }
-
-      .entity-desc {
-        font-size: 0.85rem;
-        color: var(--text-muted);
-      }
-
-      /* Search Results */
-      .search-results {
-        position: absolute;
-        top: 100%;
-        left: 20px;
-        right: 20px;
-        background: #fff;
-        border: 1px solid var(--border-color);
-        border-radius: 6px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        max-height: 300px;
-        overflow-y: auto;
-        display: none;
-        z-index: 1000;
-      }
-
-      .search-results.active {
-        display: block;
-      }
-
-      .search-result-item {
-        padding: 12px 16px;
-        border-bottom: 1px solid var(--border-color);
-        cursor: pointer;
-        transition: background 0.15s;
-      }
-
-      .search-result-item:last-child {
-        border-bottom: none;
-      }
-
-      .search-result-item:hover {
-        background: #f5f5f5;
-      }
-
-      .search-result-title {
-        font-weight: 500;
-        font-size: 0.9rem;
-        margin-bottom: 2px;
-      }
-
-      .search-result-section {
-        font-size: 0.75rem;
-        color: var(--text-muted);
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-      }
-
-      .search-no-results {
-        padding: 16px;
-        text-align: center;
-        color: var(--text-muted);
-        font-size: 0.9rem;
-      }
-
-      /* Mobile Sidebar Toggle */
-      .sidebar-toggle {
-        display: none;
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        width: 50px;
-        height: 50px;
-        background: #000;
-        color: #fff;
-        border: none;
-        border-radius: 50%;
-        cursor: pointer;
-        z-index: 200;
-        font-size: 1.5rem;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-      }
-
-      /* Responsive */
-      @media (max-width: 900px) {
-        .sidebar {
-          transform: translateX(-100%);
-          transition: transform 0.3s;
-        }
-
-        .sidebar.open {
-          transform: translateX(0);
-        }
-
-        .main {
-          margin-left: 0;
-          padding: 30px 20px;
-          max-width: 100%;
-        }
-
-        .sidebar-toggle {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-
-        h1 { font-size: 1.75rem; }
-        .api-info-row { flex-direction: column; gap: 4px; }
-      }
-
-      /* Highlight for search */
-      .highlight {
-        background: #fef3c7;
-        padding: 2px 0;
-      }
-
-      /* Scroll margin for anchors */
-      section[id] {
-        scroll-margin-top: 20px;
-      }
-    </style>
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <div class="layout">
@@ -649,6 +61,7 @@
           <a href="#webhooks" class="nav-link">Webhooks</a>
           <a href="#errors" class="nav-link">Error Handling</a>
           <a href="#endpoints" class="nav-link">API Endpoints</a>
+          <a href="#swot" class="nav-link">SWOT Analysis</a>
           <a href="#best-practices" class="nav-link">Best Practices</a>
         </nav>
       </aside>
@@ -1077,7 +490,7 @@
   },
   "transactionId": "ORD-1001-PAYMENT",
   "resultInfo": "Transaction succeeded"
-              </div>
+}</div>
 
               <!-- Automation Options -->
               <div class="section-card" style="border: 2px solid #000; background: #fff;">
@@ -1260,7 +673,7 @@ app.post('/webhooks/nextpay/deposit', (req, res) => {
               </div>
 
               <h3>Endpoint</h3>
-              <div class="endpoint"><span class="method method-get">GET</span>/v1/accounts/{id}/balances</div>
+              <div class="endpoint"><span class="method method-get">GET</span>/v1/accounts/{id}/balance</div>
 
               <h3>Response</h3>
               <div class="code-block">{
@@ -1593,6 +1006,351 @@ app.post('/webhooks/nextpay/deposit', (req, res) => {
             </table>
           </section>
 
+          <!-- SWOT Analysis -->
+          <section id="swot">
+            <h2>SWOT Analysis</h2>
+            <p>Strategic assessment of the Payoneer + NextPay escrow payment integration for freelance marketplaces:</p>
+
+            <div style="display: flex; flex-direction: column; gap: 20px;">
+              <!-- Strengths -->
+              <div class="entity-card" style="border-width: 1px;">
+                <div class="entity-title" style="color: #15803d;">Strengths</div>
+                <ul style="border: none; padding-left: 0; margin: 12px 0 0 0;">
+                  <li style="margin-bottom: 8px;"><strong>BSP-Regulated:</strong> NextPay is BSP-regulated, ensuring compliance and trust for Philippine operations</li>
+                  <li style="margin-bottom: 8px;"><strong>Proven Stack:</strong> Payoneer trusted by Upwork, Fiverr, and 2,000+ marketplaces globally</li>
+                  <li style="margin-bottom: 8px;"><strong>Instant Local Payouts:</strong> InstaPay/PESONet integration enables real-time PHP transfers to talent bank accounts</li>
+                  <li style="margin-bottom: 8px;"><strong>Flexible Trial Periods:</strong> 30/60/90-day trial system provides evaluation flexibility for clients</li>
+                  <li style="margin-bottom: 8px;"><strong>Comprehensive Webhooks:</strong> Real-time event notifications for payment lifecycle tracking</li>
+                  <li style="margin-bottom: 0;"><strong>Platform Fee Support:</strong> Built-in partner fee deduction during payout</li>
+                </ul>
+              </div>
+
+              <!-- Weaknesses -->
+              <div class="entity-card" style="border-width: 1px;">
+                <div class="entity-title" style="color: #b91c1c;">Weaknesses</div>
+                <ul style="border: none; padding-left: 0; margin: 12px 0 0 0;">
+                  <li style="margin-bottom: 8px;"><strong>Transfer Delays:</strong> 2-6 business day delay for Payoneer → PH bank transfers</li>
+                  <li style="margin-bottom: 8px;"><strong>Dual Integration:</strong> Requires maintaining two separate API integrations (Payoneer + NextPay)</li>
+                  <li style="margin-bottom: 8px;"><strong>Currency Conversion:</strong> FX rates and timing add complexity to amount reconciliation</li>
+                  <li style="margin-bottom: 8px;"><strong>PHP Only:</strong> NextPay limited to PHP currency for escrow and payouts</li>
+                  <li style="margin-bottom: 8px;"><strong>Manual Bridge:</strong> Without automation, Payoneer → NextPay transfer requires manual intervention</li>
+                  <li style="margin-bottom: 0;"><strong>Limited Dispute Resolution:</strong> No built-in arbitration system; disputes handled externally</li>
+                </ul>
+              </div>
+
+              <!-- Opportunities -->
+              <div class="entity-card" style="border-width: 1px;">
+                <div class="entity-title" style="color: #1d4ed8;">Opportunities</div>
+                <ul style="border: none; padding-left: 0; margin: 12px 0 0 0;">
+                  <li style="margin-bottom: 8px;"><strong>Unified Gateway Migration:</strong> Xendit/Rapyd can replace dual-provider setup at scale (500+ tx/mo)</li>
+                  <li style="margin-bottom: 8px;"><strong>EOR Expansion:</strong> Transition to Employer of Record model with statutory benefits (SSS, PhilHealth, Pag-IBIG)</li>
+                  <li style="margin-bottom: 8px;"><strong>Escrow.com Integration:</strong> For high-value contracts, dedicated escrow provider offers 0.89% fees</li>
+                  <li style="margin-bottom: 8px;"><strong>Automation APIs:</strong> Payoneer Withdrawal API enables fully automated fund transfers</li>
+                  <li style="margin-bottom: 8px;"><strong>Global Expansion:</strong> Stripe Connect for markets beyond Philippines</li>
+                  <li style="margin-bottom: 0;"><strong>Growing Remote Work:</strong> Increasing demand for Filipino talent from foreign clients</li>
+                </ul>
+              </div>
+
+              <!-- Threats -->
+              <div class="entity-card" style="border-width: 1px;">
+                <div class="entity-title" style="color: #a16207;">Threats</div>
+                <ul style="border: none; padding-left: 0; margin: 12px 0 0 0;">
+                  <li style="margin-bottom: 8px;"><strong>Regulatory Changes:</strong> BSP or international payment regulations may impact operations</li>
+                  <li style="margin-bottom: 8px;"><strong>FX Volatility:</strong> Currency fluctuations between USD/EUR and PHP affect contract values</li>
+                  <li style="margin-bottom: 8px;"><strong>Competition:</strong> Established platforms (Upwork, Fiverr) have integrated payment systems</li>
+                  <li style="margin-bottom: 8px;"><strong>Provider Dependency:</strong> Reliance on third-party APIs (Payoneer, NextPay) for core functionality</li>
+                  <li style="margin-bottom: 8px;"><strong>Fraud Risk:</strong> Escrow systems are targets for payment fraud and chargebacks</li>
+                  <li style="margin-bottom: 0;"><strong>API Rate Limits:</strong> High transaction volumes may hit provider rate limits</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="section-card" style="margin-top: 24px;">
+              <div class="section-card-title">Strategic Recommendations</div>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Phase</th>
+                    <th>Focus</th>
+                    <th>Recommendation</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Launch</strong></td>
+                    <td>Quick setup, partner integration</td>
+                    <td>Payoneer + NextPay — BSP-regulated escrow, instant InstaPay/PESONet payouts, proven stack</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Growth</strong></td>
+                    <td>Automation + lower fees</td>
+                    <td>Add Payoneer Withdrawal API for automated transfers; negotiate NextPay volume rates</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Scale</strong></td>
+                    <td>Best overall value</td>
+                    <td>Evaluate Xendit as single provider — lower combined fees, faster transfers, simpler integration</td>
+                  </tr>
+                  <tr>
+                    <td><strong>High-Value</strong></td>
+                    <td>Maximum trust + low %</td>
+                    <td>Escrow.com for premium contracts — 0.89% fee, dedicated escrow, 25+ year track record</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Payment Provider Comparison -->
+            <div class="section-card full-width-card" style="margin-top: 24px; padding: 0; overflow: hidden;">
+              <div style="background: #000; color: #fff; padding: 16px 24px;">
+                <div style="font-weight: 600; font-size: 1.1rem;">Payment Provider Comparison</div>
+                <div style="font-size: 0.85rem; opacity: 0.8; margin-top: 4px;">For escrow flow: Foreign Client (USD/EUR) → Collection → Escrow → PHP Payout</div>
+              </div>
+              
+              <div style="overflow-x: auto; padding: 0;">
+                <table class="provider-table" style="min-width: 850px; margin: 0; border: none;">
+                  <thead>
+                    <tr>
+                      <th style="width: 130px;">Provider</th>
+                      <th style="width: 160px;">Intl Collection</th>
+                      <th style="width: 160px;">PHP Payout</th>
+                      <th style="width: 110px;">Escrow</th>
+                      <th style="width: 90px;">API</th>
+                      <th>Best For</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- Tier Header: Recommended -->
+                    <tr style="background: #dcfce7;">
+                      <td colspan="6" style="padding: 8px 12px; font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: #15803d; border-bottom: 2px solid #22c55e;">
+                        ★ Recommended for Escrow Flow
+                      </td>
+                    </tr>
+                    <tr class="row-tier1">
+                      <td><strong>Xendit</strong></td>
+                      <td><span class="support-full">✓</span> 130+ countries, Cards</td>
+                      <td><span class="support-full">✓</span> InstaPay, 450+ banks</td>
+                      <td><span class="support-full">✓</span> Built-in</td>
+                      <td class="rating">★★★★★</td>
+                      <td><span class="tier-badge tier-recommended">TOP PICK</span> Single API</td>
+                    </tr>
+                    <tr class="row-tier1">
+                      <td><strong>PayMongo</strong></td>
+                      <td><span class="support-full">✓</span> USD cards, Visa/MC</td>
+                      <td><span class="support-full">✓</span> InstaPay, ₱10/tx</td>
+                      <td><span class="support-partial">◐</span> Hold-capture</td>
+                      <td class="rating">★★★★★</td>
+                      <td><span class="tier-badge tier-recommended">PH BEST</span> Best docs</td>
+                    </tr>
+                    
+                    <!-- Tier Header: Current Stack -->
+                    <tr style="background: #dbeafe;">
+                      <td colspan="6" style="padding: 8px 12px; font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: #1d4ed8; border-bottom: 2px solid #3b82f6;">
+                        ◆ Current Stack (Payoneer + NextPay)
+                      </td>
+                    </tr>
+                    <tr class="row-tier1-current">
+                      <td><strong>Payoneer</strong></td>
+                      <td><span class="support-full">✓</span> USD/EUR/GBP trusted</td>
+                      <td><span class="support-partial">◐</span> 1-5 days, 2% FX</td>
+                      <td><span class="support-none">✗</span> External</td>
+                      <td class="rating">★★★★☆</td>
+                      <td><span class="tier-badge tier-current">IN USE</span> Brand trust</td>
+                    </tr>
+                    <tr class="row-tier1-current">
+                      <td><strong>NextPay</strong></td>
+                      <td><span class="support-none">✗</span> PHP only</td>
+                      <td><span class="support-full">✓</span> InstaPay (instant)</td>
+                      <td><span class="support-full">✓</span> BSP-regulated</td>
+                      <td class="rating">★★★★☆</td>
+                      <td><span class="tier-badge tier-current">IN USE</span> Local escrow</td>
+                    </tr>
+                    
+                    <!-- Tier Header: Alternatives -->
+                    <tr style="background: #fef3c7;">
+                      <td colspan="6" style="padding: 8px 12px; font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: #b45309; border-bottom: 2px solid #f59e0b;">
+                        ○ Good Alternatives
+                      </td>
+                    </tr>
+                    <tr class="row-tier2">
+                      <td><strong>dLocal</strong></td>
+                      <td><span class="support-full">✓</span> 40+ countries</td>
+                      <td><span class="support-full">✓</span> GCash, Maya, banks</td>
+                      <td><span class="support-partial">◐</span> Via platform</td>
+                      <td class="rating">★★★★☆</td>
+                      <td>Emerging markets, PH licensed</td>
+                    </tr>
+                    <tr class="row-tier2">
+                      <td><strong>2C2P</strong></td>
+                      <td><span class="support-full">✓</span> 350+ methods</td>
+                      <td><span class="support-full">✓</span> PHP local rails</td>
+                      <td><span class="support-partial">◐</span> Merchant held</td>
+                      <td class="rating">★★★★☆</td>
+                      <td>SEA coverage, next-day</td>
+                    </tr>
+                    <tr class="row-tier2">
+                      <td><strong>Stripe Connect</strong></td>
+                      <td><span class="support-full">✓</span> 135+ currencies</td>
+                      <td><span class="support-partial">◐</span> Via Payoneer/Wise</td>
+                      <td><span class="support-full">✓</span> 90-day delay</td>
+                      <td class="rating">★★★★★</td>
+                      <td>Global expansion, best DX</td>
+                    </tr>
+                    <tr class="row-tier2">
+                      <td><strong>Wise Business</strong></td>
+                      <td><span class="support-full">✓</span> 40+ currencies</td>
+                      <td><span class="support-full">✓</span> InstaPay (instant)</td>
+                      <td><span class="support-none">✗</span> No escrow</td>
+                      <td class="rating">★★★★☆</td>
+                      <td>Fast transfers, low FX</td>
+                    </tr>
+                    <tr class="row-tier2">
+                      <td><strong>HitPay</strong></td>
+                      <td><span class="support-full">✓</span> 150+ currencies</td>
+                      <td><span class="support-full">✓</span> InstaPay, PESONet</td>
+                      <td><span class="support-none">✗</span> No escrow</td>
+                      <td class="rating">★★★☆☆</td>
+                      <td>Easy setup, SME-friendly</td>
+                    </tr>
+                    
+                    <!-- Tier Header: Specialized -->
+                    <tr style="background: #f3f4f6;">
+                      <td colspan="6" style="padding: 8px 12px; font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: #6b7280; border-bottom: 2px solid #9ca3af;">
+                        ◇ Specialized / Limited
+                      </td>
+                    </tr>
+                    <tr class="row-tier3">
+                      <td><strong>DragonPay</strong></td>
+                      <td><span class="support-partial">◐</span> Cards + crypto</td>
+                      <td><span class="support-full">✓</span> Mass payout, OTC</td>
+                      <td><span class="support-none">✗</span> No escrow</td>
+                      <td class="rating">★★★☆☆</td>
+                      <td>Cash payouts, legacy</td>
+                    </tr>
+                    <tr class="row-tier3">
+                      <td><strong>PesoPay</strong></td>
+                      <td><span class="support-full">✓</span> USD, Visa/MC/Amex</td>
+                      <td><span class="support-partial">◐</span> Settlement only</td>
+                      <td><span class="support-none">✗</span> No escrow</td>
+                      <td class="rating">★★★☆☆</td>
+                      <td>E-commerce, 3D Secure</td>
+                    </tr>
+                    <tr class="row-tier3">
+                      <td><strong>DSGPay</strong></td>
+                      <td><span class="support-full">✓</span> 30+ currencies, VA</td>
+                      <td><span class="support-partial">◐</span> Via SWIFT</td>
+                      <td><span class="support-none">✗</span> No escrow</td>
+                      <td class="rating">★★★☆☆</td>
+                      <td>B2B cross-border</td>
+                    </tr>
+                    <tr class="row-tier3">
+                      <td><strong>MyEG</strong></td>
+                      <td><span class="support-none">✗</span> Limited intl</td>
+                      <td><span class="support-full">✓</span> GCash, 100K+ OTC</td>
+                      <td><span class="support-none">✗</span> No escrow</td>
+                      <td class="rating">★★☆☆☆</td>
+                      <td>Gov't payments only</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="comparison-legend">
+                <div class="legend-item"><span class="support-full">✓</span> Full support</div>
+                <div class="legend-item"><span class="support-partial">◐</span> Partial/workaround</div>
+                <div class="legend-item"><span class="support-none">✗</span> Not supported</div>
+                <div class="legend-item"><span style="color: #666;">VA = Virtual Accounts</span></div>
+                <div class="legend-item"><span style="color: #666;">OTC = Over-the-counter</span></div>
+              </div>
+            </div>
+
+            <!-- Flow Recommendations by Provider -->
+            <!-- Flow Recommendations by Provider -->
+            <div class="section-card" style="margin-top: 24px; padding: 0; overflow: hidden;">
+              <div style="background: #000; color: #fff; padding: 16px 24px;">
+                <div style="font-weight: 600; font-size: 1.1rem;">Recommended Payment Flows</div>
+                <div style="font-size: 0.85rem; opacity: 0.8; margin-top: 4px;">Choose based on your platform stage and priorities</div>
+              </div>
+              
+              <div style="padding: 24px;">
+                <!-- Option 1 -->
+                <div style="margin-bottom: 24px;">
+                  <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+                    <span class="tier-badge tier-current">CURRENT</span>
+                    <h4 style="margin: 0; font-size: 1rem;">Option 1: Payoneer + NextPay</h4>
+                  </div>
+                  <div class="flow-step-container">
+                    <span class="flow-chip flow-chip-solid">Client (USD)</span>
+                    <span class="flow-arrow">→</span>
+                    <span class="flow-chip flow-chip-outline">Payoneer Checkout</span>
+                    <span class="flow-arrow">→</span>
+                    <span class="flow-chip flow-chip-dashed">Transfer (2-6 days)</span>
+                    <span class="flow-arrow">→</span>
+                    <span class="flow-chip flow-chip-solid">NextPay Escrow</span>
+                    <span class="flow-arrow">→</span>
+                    <span class="flow-chip flow-chip-outline">Talent (PHP)</span>
+                  </div>
+                  <div style="display: flex; flex-wrap: wrap; gap: 12px; font-size: 0.8rem; color: #666;">
+                    <span><span class="support-full">✓</span> Brand trust</span>
+                    <span><span class="support-full">✓</span> BSP escrow</span>
+                    <span><span class="support-none">✗</span> 2-6 day delay</span>
+                    <span><span class="support-none">✗</span> Dual integration</span>
+                  </div>
+                </div>
+
+                <!-- Option 2 -->
+                <div style="margin-bottom: 24px;">
+                  <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+                    <span class="tier-badge tier-recommended">RECOMMENDED</span>
+                    <h4 style="margin: 0; font-size: 1rem;">Option 2: Xendit (Single Provider at Scale)</h4>
+                  </div>
+                  <div class="flow-step-container">
+                    <span class="flow-chip flow-chip-solid">Client (USD)</span>
+                    <span class="flow-arrow">→</span>
+                    <span class="flow-chip flow-chip-solid">Xendit Invoice</span>
+                    <span class="flow-arrow">→</span>
+                    <span class="flow-chip flow-chip-solid">Xendit Hold</span>
+                    <span class="flow-arrow">→</span>
+                    <span class="flow-chip flow-chip-solid">Xendit Payout</span>
+                    <span class="flow-arrow">→</span>
+                    <span class="flow-chip flow-chip-outline">Talent (PHP)</span>
+                  </div>
+                  <div style="display: flex; flex-wrap: wrap; gap: 12px; font-size: 0.8rem; color: #666;">
+                    <span><span class="support-full">✓</span> Single API</span>
+                    <span><span class="support-full">✓</span> Instant payouts</span>
+                    <span><span class="support-full">✓</span> Built-in escrow</span>
+                    <span><span class="support-full">✓</span> Lower fees</span>
+                  </div>
+                </div>
+
+                <!-- Option 3 -->
+                <div>
+                  <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+                    <span class="tier-badge tier-alternative">ALTERNATIVE</span>
+                    <h4 style="margin: 0; font-size: 1rem;">Option 3: PayMongo (PH-First)</h4>
+                  </div>
+                  <div class="flow-step-container">
+                    <span class="flow-chip flow-chip-solid">Client (USD Card)</span>
+                    <span class="flow-arrow">→</span>
+                    <span class="flow-chip flow-chip-solid">PayMongo Intent</span>
+                    <span class="flow-arrow">→</span>
+                    <span class="flow-chip flow-chip-solid">Capture on Approval</span>
+                    <span class="flow-arrow">→</span>
+                    <span class="flow-chip flow-chip-solid">PayMongo Payout</span>
+                    <span class="flow-arrow">→</span>
+                    <span class="flow-chip flow-chip-outline">Talent (PHP)</span>
+                  </div>
+                  <div style="display: flex; flex-wrap: wrap; gap: 12px; font-size: 0.8rem; color: #666;">
+                    <span><span class="support-full">✓</span> Best PH docs</span>
+                    <span><span class="support-full">✓</span> Hold-then-capture</span>
+                    <span><span class="support-full">✓</span> ₱10/payout</span>
+                    <span><span class="support-partial">◐</span> Cards only for intl</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
           <!-- Best Practices -->
           <section id="best-practices">
             <h2>Best Practices</h2>
@@ -1741,8 +1499,8 @@ app.post('/webhooks/nextpay/deposit', (req, res) => {
           <!-- Footer -->
           <footer style="margin-top: 60px; padding-top: 30px; border-top: 1px solid var(--border-color);">
             <p style="color: var(--text-muted); font-size: 0.9rem;">
-              For complete API reference, visit <a href="https://api.partners.nextpay.world/docs" style="color: #000;">api.partners.nextpay.world/docs</a><br>
-              Last updated: December 2024 | NextPay Partners API v1
+              For complete API reference, visit <a href="https://api.partners.nextpay.world/docs" style="color: #000;" rel="noopener noreferrer" target="_blank">api.partners.nextpay.world/docs</a><br>
+              Last updated: December 19, 2024 | NextPay Partners API v1 | Payment Provider Research Updated
             </p>
           </footer>
         </div>
@@ -1773,8 +1531,8 @@ app.post('/webhooks/nextpay/deposit', (req, res) => {
         { title: 'Create Merchant', section: 'Setup', id: 'create-merchant' },
         { title: 'Create Account', section: 'Setup', id: 'create-account' },
         { title: 'Complete Escrow Flow', section: 'Escrow Flow', id: 'flow' },
-        { title: 'Create Payment Intent', section: 'Escrow Flow', id: 'payment-intent' },
-        { title: 'Payment Webhook', section: 'Escrow Flow', id: 'payment-webhook' },
+        { title: 'International Payment (Payoneer)', section: 'Escrow Flow', id: 'payoneer-flow' },
+        { title: 'Confirm Funds', section: 'Escrow Flow', id: 'payment-success' },
         { title: 'Release Funds', section: 'Escrow Flow', id: 'release-funds' },
         { title: 'Payout Webhook', section: 'Escrow Flow', id: 'payout-webhook' },
         { title: 'Refund Flow', section: 'Reference', id: 'refund' },
@@ -1856,7 +1614,7 @@ app.post('/webhooks/nextpay/deposit', (req, res) => {
           const sectionTop = section.offsetTop;
           const sectionHeight = section.clientHeight;
           
-          if (pageYOffset >= sectionTop - 100) {
+          if (window.scrollY >= sectionTop - 100) {
             current = section.getAttribute('id');
           }
         });
