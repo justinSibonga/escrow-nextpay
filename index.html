@@ -293,7 +293,59 @@
                 <div class="flow-arrow">↓</div>
               </div>
               <div class="flow-step">
-                <div class="flow-box">3. Client sends offer → Talent accepts</div>
+                <div class="flow-box">3. Client sends offer</div>
+                <div class="flow-arrow">↓</div>
+              </div>
+              
+              <!-- Offer Pending State -->
+              <div class="flow-step">
+                <div class="flow-box" style="background: #fefce8; border-color: #eab308;">
+                  <span style="background: #eab308; color: #fff; font-size: 0.65rem; padding: 2px 6px; border-radius: 3px; margin-right: 8px;">PENDING</span>
+                  Offer stays in "Pending" state<br>
+                  <small style="font-weight: normal; opacity: 0.7;">• No escrow collected • No work can start<br>• Client can: Withdraw / Edit and resend</small>
+                </div>
+              </div>
+              
+              <!-- Offer Status Branches -->
+              <div style="display: flex; gap: 24px; justify-content: center; margin: 16px 0; flex-wrap: wrap;">
+                <!-- Offer Sent -->
+                <div style="text-align: center;">
+                  <div class="flow-box" style="background: #dbeafe; border-color: #3b82f6; min-width: 200px;">
+                    Offer Sent<br>
+                    <small style="font-weight: normal; opacity: 0.7;">• Talent has not responded yet<br>• No escrow funded<br>• Test cannot start</small>
+                  </div>
+                </div>
+                
+                <!-- Offer Accepted -->
+                <div style="text-align: center;">
+                  <div class="flow-box" style="background: #dcfce7; border-color: #22c55e; min-width: 200px;">
+                    ✓ Offer Accepted<br>
+                    <small style="font-weight: normal; opacity: 0.7;">• Talent agrees to terms<br>• Employer funds escrow<br>• Test becomes eligible</small>
+                  </div>
+                  <div class="flow-arrow">↓</div>
+                </div>
+                
+                <!-- Offer Declined -->
+                <div style="text-align: center;">
+                  <div class="flow-box" style="background: #fee2e2; border-color: #ef4444; min-width: 200px;">
+                    ✗ Offer Declined<br>
+                    <small style="font-weight: normal; opacity: 0.7;">• Offer is closed<br>• No payment collected<br>• May send new offer</small>
+                  </div>
+                </div>
+              </div>
+
+
+              
+              <!-- Important Notes -->
+              <div class="flow-step">
+                <div class="flow-box" style="background: #f3f4f6; border-style: dashed; text-align: left;">
+                  <small style="font-weight: normal; display: block;">
+                    <em>"Escrow is never collected unless an offer is accepted"</em><br>
+                    <em>"Pending offers have no financial impact"</em><br>
+                    <em>"Tests cannot start unless the offer is accepted and funded"</em><br>
+                    <strong style="margin-top: 8px; display: inline-block;">+ Must have 'AGREEMENT CONTRACT'</strong>
+                  </small>
+                </div>
                 <div class="flow-arrow">↓</div>
               </div>
 
@@ -1100,6 +1152,213 @@ app.post('/webhooks/nextpay/deposit', (req, res) => {
               </table>
             </div>
 
+            <!-- API Costing Comparison -->
+            <div class="section-card full-width-card" style="margin-top: 24px; padding: 0;">
+              <div style="background: #000; color: #fff; padding: 16px 24px;">
+                <div style="font-weight: 600; font-size: 1.1rem;">API Costing Comparison</div>
+                <div style="font-size: 0.85rem; opacity: 0.8; margin-top: 4px;">For escrow flow: Foreign Client (USD/EUR) → Collection → Escrow → PHP Payout</div>
+              </div>
+              
+              <div style="overflow-x: auto;">
+                <table class="provider-table" style="min-width: 900px; margin: 0; border: none;">
+                  <thead>
+                    <tr>
+                      <th style="width: 120px;">Provider</th>
+                      <th style="width: 180px;">Collection Fees</th>
+                      <th style="width: 150px;">Payout Fees</th>
+                      <th style="width: 120px;">FX Conversion</th>
+                      <th style="width: 140px;">Monthly/Subscription</th>
+                      <th>Notes</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- Current Stack -->
+                    <tr>
+                      <td colspan="6" style="padding: 12px 16px 8px; font-weight: 600; font-size: 0.85rem; letter-spacing: 0.05em; color: #1d4ed8; border-bottom: 1px solid #e5e7eb;">
+                        Current Stack (Payoneer + NextPay)
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><strong>Payoneer</strong></td>
+                      <td>
+                        Credit Card: 3-3.99%<br>
+                        <small style="color: #666;">ACH (US): 1%</small>
+                      </td>
+                      <td>
+                        To bank: up to 3%<br>
+                        <small style="color: #666;">Same currency: ~$1.50</small>
+                      </td>
+                      <td>~2%</td>
+                      <td>
+                        $29.95/year<br>
+                        <small style="color: #666;">Waived if >$2K deposits</small>
+                      </td>
+                      <td>Trusted brand, 2-6 day transfers</td>
+                    </tr>
+                    <tr>
+                      <td><strong>NextPay</strong></td>
+                      <td>
+                        <span style="color: #666;">—</span><br>
+                        <small style="color: #666;">Disbursement only</small>
+                      </td>
+                      <td>
+                        ₱10-12 per ₱50K<br>
+                        <small style="color: #666;">InstaPay/PESONet</small>
+                      </td>
+                      <td><span style="color: #666;">N/A</span></td>
+                      <td>
+                        ₱1,147-₱5,737/mo<br>
+                        <small style="color: #666;">Basic–Pro Plus</small>
+                      </td>
+                      <td>BSP-regulated, PH only</td>
+                    </tr>
+
+                    <!-- Recommended -->
+                    <tr>
+                      <td colspan="6" style="padding: 24px 16px 8px; font-weight: 600; font-size: 0.85rem; letter-spacing: 0.05em; color: #15803d; border-bottom: 1px solid #e5e7eb;">
+                        Recommended Single Providers
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><strong>Xendit</strong></td>
+                      <td>
+                        Local Cards: 3.2% + ₱10<br>
+                        Intl Cards: 4.2% + ₱10<br>
+                        <small style="color: #666;">GCash: 2.3%, Maya: 1.8%</small>
+                      </td>
+                      <td>
+                        ₱10 per tx<br>
+                        <small style="color: #666;">All banks & eWallets</small>
+                      </td>
+                      <td>Built-in</td>
+                      <td>
+                        ₱85/active sub-acct<br>
+                        <small style="color: #666;">+ 0.5% in-house tx (cap ₱35)</small>
+                      </td>
+                      <td><span class="tier-badge tier-recommended">TOP PICK</span> Single API</td>
+                    </tr>
+                    <tr>
+                      <td><strong>PayMongo</strong></td>
+                      <td>
+                        Cards: 3.5% + ₱15<br>
+                        Intl Cards: +1%<br>
+                        <small style="color: #666;">GCash: 2.5%, QR Ph: 1.5%</small>
+                      </td>
+                      <td>
+                        ₱10 per tx<br>
+                        <small style="color: #666;">InstaPay/PESONet</small>
+                      </td>
+                      <td><span style="color: #666;">N/A</span></td>
+                      <td>
+                        None<br>
+                        <small style="color: #666;">Per-transaction only</small>
+                      </td>
+                      <td><span class="tier-badge tier-recommended">PH BEST</span> Best docs, VAT incl.</td>
+                    </tr>
+
+                    <!-- Alternatives -->
+                    <tr>
+                      <td colspan="6" style="padding: 24px 16px 8px; font-weight: 600; font-size: 0.85rem; letter-spacing: 0.05em; color: #b45309; border-bottom: 1px solid #e5e7eb;">
+                        Alternatives
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><strong>Stripe Connect</strong></td>
+                      <td>
+                        US: 2.9% + 30¢<br>
+                        Intl Cards: +1.5%<br>
+                        <small style="color: #666;">EEA: 1.5% + €0.25</small>
+                      </td>
+                      <td>
+                        0.25% + 25¢<br>
+                        <small style="color: #666;">Instant: +1%</small>
+                      </td>
+                      <td>1-2%</td>
+                      <td>
+                        $2/active account<br>
+                        <small style="color: #666;">Express/Custom only</small>
+                      </td>
+                      <td>Best DX, limited PH payout</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Wise Business</strong></td>
+                      <td>
+                        Cards: 1.5-2%<br>
+                        <small style="color: #666;">Bank: varies</small>
+                      </td>
+                      <td>
+                        0.5-1% + fixed<br>
+                        <small style="color: #666;">InstaPay supported</small>
+                      </td>
+                      <td>0.35-0.6%</td>
+                      <td>
+                        None<br>
+                        <small style="color: #666;">Per-transaction only</small>
+                      </td>
+                      <td>Lowest FX, no escrow</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Cost Example -->
+            <div class="section-card" style="margin-top: 24px;">
+              <div class="section-card-title">Example: $1,000 USD Contract Payout to PH Talent</div>
+              <p style="margin-bottom: 16px;">Cost breakdown for a typical $1,000 USD contract disbursed to a Filipino talent (assuming ₱56 = $1 USD):</p>
+              
+              <table style="margin-bottom: 16px;">
+                <thead>
+                  <tr>
+                    <th>Stack</th>
+                    <th>Collection Fee</th>
+                    <th>FX Cost</th>
+                    <th>Payout Fee</th>
+                    <th>Total Cost</th>
+                    <th>Talent Receives</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Payoneer + NextPay</strong></td>
+                    <td>~$35 (3.5%)</td>
+                    <td>~$20 (2%)</td>
+                    <td>~₱12 ($0.21)</td>
+                    <td><strong>~$55.21</strong></td>
+                    <td>₱52,908</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Xendit (Single)</strong></td>
+                    <td>~$43 (4.2% + ₱10)</td>
+                    <td>Included</td>
+                    <td>₱10 ($0.18)</td>
+                    <td style="color: #15803d;"><strong>~$43.18</strong></td>
+                    <td style="color: #15803d;">₱53,582</td>
+                  </tr>
+                  <tr>
+                    <td><strong>PayMongo</strong></td>
+                    <td>~$46 (4.5% + ₱15)</td>
+                    <td>N/A (PHP only)</td>
+                    <td>₱10 ($0.18)</td>
+                    <td style="color: #15803d;"><strong>~$46.18</strong></td>
+                    <td style="color: #15803d;">₱53,413</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Stripe + Local</strong></td>
+                    <td>~$45 (4.4%)</td>
+                    <td>~$10 (1%)</td>
+                    <td>~$3 (0.3%)</td>
+                    <td><strong>~$58</strong></td>
+                    <td>₱52,752</td>
+                  </tr>
+                </tbody>
+              </table>
+              
+              <div style="background: #f9fafb; border: 1px solid #e5e7eb; padding: 12px; border-radius: 6px;">
+                <strong>Key Insight:</strong> Single-provider solutions (Xendit, PayMongo) offer 10-20% lower total fees compared to multi-provider stacks due to eliminated FX conversion costs and simpler fee structures.
+              </div>
+            </div>
+
             <!-- Payment Provider Comparison -->
             <div class="section-card full-width-card" style="margin-top: 24px; padding: 0; overflow: hidden;">
               <div style="background: #000; color: #fff; padding: 16px 24px;">
@@ -1543,6 +1802,14 @@ app.post('/webhooks/nextpay/deposit', (req, res) => {
         { title: 'payout.failed', section: 'Webhooks', id: 'webhooks' },
         { title: 'Error Handling', section: 'Reference', id: 'errors' },
         { title: 'API Endpoints', section: 'Reference', id: 'endpoints' },
+        { title: 'SWOT Analysis', section: 'Reference', id: 'swot' },
+        { title: 'API Costing', section: 'SWOT Analysis', id: 'swot' },
+        { title: 'Payment Provider Fees', section: 'SWOT Analysis', id: 'swot' },
+        { title: 'Xendit Pricing', section: 'SWOT Analysis', id: 'swot' },
+        { title: 'PayMongo Pricing', section: 'SWOT Analysis', id: 'swot' },
+        { title: 'Payoneer Fees', section: 'SWOT Analysis', id: 'swot' },
+        { title: 'NextPay Fees', section: 'SWOT Analysis', id: 'swot' },
+        { title: 'Stripe Connect Pricing', section: 'SWOT Analysis', id: 'swot' },
         { title: 'Best Practices', section: 'Reference', id: 'best-practices' },
         { title: 'Idempotency', section: 'Best Practices', id: 'best-practices' },
         { title: 'QR Code', section: 'Payment Intent', id: 'payment-intent' },
@@ -1657,6 +1924,128 @@ app.post('/webhooks/nextpay/deposit', (req, res) => {
           searchInput.blur();
         }
       });
+
+      // Sticky Table Headers (Optimized for smooth scrolling)
+      (function() {
+        const tables = document.querySelectorAll('.provider-table');
+        
+        tables.forEach(table => {
+          const thead = table.querySelector('thead');
+          if (!thead) return;
+          
+          // Find the parent section-card and the black header div
+          const sectionCard = table.closest('.section-card');
+          const blackHeader = sectionCard ? sectionCard.querySelector('div[style*="background: #000"]') : null;
+          
+          // Create sticky header container
+          const stickyContainer = document.createElement('div');
+          stickyContainer.className = 'sticky-header-clone';
+          
+          // Clone the black header if it exists
+          if (blackHeader) {
+            const cloneBlackHeader = blackHeader.cloneNode(true);
+            stickyContainer.appendChild(cloneBlackHeader);
+          }
+          
+          // Create wrapper for table (for horizontal scroll)
+          const tableWrapper = document.createElement('div');
+          tableWrapper.style.overflowX = 'auto';
+          
+          // Clone the table structure with only thead
+          const cloneTable = document.createElement('table');
+          cloneTable.className = table.className;
+          cloneTable.style.cssText = table.style.cssText;
+          
+          const cloneThead = thead.cloneNode(true);
+          cloneTable.appendChild(cloneThead);
+          tableWrapper.appendChild(cloneTable);
+          stickyContainer.appendChild(tableWrapper);
+          document.body.appendChild(stickyContainer);
+          
+          // Cache column widths on load
+          let cachedWidths = [];
+          function cacheWidths() {
+            cachedWidths = Array.from(thead.querySelectorAll('th')).map(th => th.offsetWidth);
+          }
+          cacheWidths();
+          
+          let isVisible = false;
+          let ticking = false;
+          
+          // Update header position on scroll (optimized with requestAnimationFrame)
+          function updateStickyHeader() {
+            const tableRect = table.getBoundingClientRect();
+            const tableBottom = tableRect.bottom;
+            const stickyHeight = stickyContainer.offsetHeight || 80;
+            
+            // Use black header position as trigger, fallback to section card top
+            const triggerElement = blackHeader || sectionCard || table;
+            const triggerRect = triggerElement.getBoundingClientRect();
+            
+            // Show sticky when the black header scrolls out of view and table bottom is still visible
+            const shouldShow = triggerRect.bottom < 0 && tableBottom > stickyHeight;
+            
+            if (shouldShow && !isVisible) {
+              isVisible = true;
+              stickyContainer.classList.add('visible');
+              
+              // Get the section card's position for alignment
+              const cardRect = sectionCard ? sectionCard.getBoundingClientRect() : tableRect;
+              stickyContainer.style.left = cardRect.left + 'px';
+              stickyContainer.style.width = cardRect.width + 'px';
+              
+              // Apply cached widths
+              const cloneThs = cloneThead.querySelectorAll('th');
+              cachedWidths.forEach((width, i) => {
+                if (cloneThs[i]) {
+                  cloneThs[i].style.width = width + 'px';
+                  cloneThs[i].style.minWidth = width + 'px';
+                }
+              });
+            } else if (!shouldShow && isVisible) {
+              isVisible = false;
+              stickyContainer.classList.remove('visible');
+            }
+            
+            // Update position if visible
+            if (isVisible) {
+              const cardRect = sectionCard ? sectionCard.getBoundingClientRect() : tableRect;
+              stickyContainer.style.left = cardRect.left + 'px';
+              
+              // Sync horizontal scroll
+              const scrollContainer = table.closest('div[style*="overflow-x"]') || table.parentElement;
+              if (scrollContainer) {
+                tableWrapper.scrollLeft = scrollContainer.scrollLeft;
+              }
+            }
+            
+            ticking = false;
+          }
+          
+          function onScroll() {
+            if (!ticking) {
+              requestAnimationFrame(updateStickyHeader);
+              ticking = true;
+            }
+          }
+          
+          // Sync scroll between original and sticky
+          const scrollContainer = table.closest('div[style*="overflow-x"]') || table.parentElement;
+          if (scrollContainer) {
+            scrollContainer.addEventListener('scroll', () => {
+              if (isVisible) {
+                tableWrapper.scrollLeft = scrollContainer.scrollLeft;
+              }
+            }, { passive: true });
+          }
+          
+          window.addEventListener('scroll', onScroll, { passive: true });
+          window.addEventListener('resize', () => {
+            cacheWidths();
+            onScroll();
+          });
+        });
+      })();
     </script>
   </body>
 </html>
